@@ -1,0 +1,3 @@
+﻿namespace ShepidiSoft.Application.Features.OrganizationPositions.Commands.CreateOrganizationPosition;
+
+public sealed record CreateOrganizationPositionCommandResponse(int Id);
