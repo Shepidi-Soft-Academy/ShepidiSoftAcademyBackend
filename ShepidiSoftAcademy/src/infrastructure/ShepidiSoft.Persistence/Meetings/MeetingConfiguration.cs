@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShepidiSoft.Domain.Entities;
 
 public class MeetingConfiguration : IEntityTypeConfiguration<Meeting>
 {
