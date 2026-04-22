@@ -20,6 +20,7 @@ using ShepidiSoft.Persistence.Outbox;
 using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.Persistence.Seedings.Seeders;
 using ShepidiSoft.Persistence.Students;
+using ShepidiSoft.Persistence.Meetings;
 
 namespace ShepidiSoft.Persistence.Extensions;
 
@@ -67,6 +68,7 @@ public static class DependencyInjection
         services.AddScoped<IContactMessageRepository,ContactMessageRepository>();
         services.AddScoped<ICareerApplicationRepository,CareerApplicationRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
+        services.AddScoped<IMeetingRepository, MeetingRepository>();
     }
 
     private static void AddSeeding(IServiceCollection services)
