@@ -14,8 +14,11 @@ using ShepidiSoft.Persistence.Interceptors;
 using ShepidiSoft.Persistence.Offerings;
 using ShepidiSoft.Persistence.Options;
 using ShepidiSoft.Persistence.OrganizationMembers;
+using ShepidiSoft.Persistence.Organizations;
 using ShepidiSoft.Persistence.OrganizationPositions;
 using ShepidiSoft.Persistence.Outbox;
+using ShepidiSoft.Persistence.Seedings;
+using ShepidiSoft.Persistence.Seedings.Seeders;
 using ShepidiSoft.Persistence.Students;
 
 namespace ShepidiSoft.Persistence.Extensions;
@@ -41,6 +44,7 @@ public static class DependencyInjection
         });
 
         AddRepositories(services);
+        AddSeeding(services);
 
         return services;
     }
@@ -55,6 +59,7 @@ public static class DependencyInjection
         services.AddScoped<ICourseMembershipRepository, CourseMembershipRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IOrganizationMemberRepository, OrganizationMemberRepository>();
         services.AddScoped<IOrganizationPositionRepository, OrganizationPositionRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
@@ -62,5 +67,12 @@ public static class DependencyInjection
         services.AddScoped<IContactMessageRepository,ContactMessageRepository>();
         services.AddScoped<ICareerApplicationRepository,CareerApplicationRepository>();
         services.AddScoped<IOutboxRepository, OutboxRepository>();
+    }
+
+    private static void AddSeeding(IServiceCollection services)
+    {
+        services.AddScoped<RoleSeeder>();
+        services.AddScoped<OrganizationMemberSeeder>();
+        services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
     }
 }

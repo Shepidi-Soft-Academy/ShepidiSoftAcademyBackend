@@ -8,6 +8,7 @@ using ShepidiSoft.Identity;
 using ShepidiSoft.Identity.Auths.Jwt;
 using ShepidiSoft.Notification;
 using ShepidiSoft.Persistence.Extensions;
+using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.BackgroundJobs.Extensions;
 using System.Text.Json.Serialization;
 
@@ -82,6 +83,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // Seed database
+    using (var scope = app.Services.CreateScope())
+    {
+        var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
+        await seeder.SeedAsync();
+    }
 }
 
 app.UseHttpsRedirection();
@@ -95,4 +103,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run();app.Run();
