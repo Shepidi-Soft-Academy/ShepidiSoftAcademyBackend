@@ -21,7 +21,6 @@
     <Folder Include="Features\DocumentTopics\Commands\DeleteDocumentTopic\" />
     <Folder Include="Features\DocumentTopics\Commands\UpdateDocumentTopic\" />
     <Folder Include="Features\DocumentTopics\Queries\" />
-    <Folder Include="Features\Meetings\Queries\" />
     <Folder Include="Features\OrganizationPositions\Commands\UpdateOrganizationPosition\" />
     <Folder Include="Features\Organizations\Commands\UpdateOrganization\" />
     <Folder Include="Features\Organizations\Queries\" />
