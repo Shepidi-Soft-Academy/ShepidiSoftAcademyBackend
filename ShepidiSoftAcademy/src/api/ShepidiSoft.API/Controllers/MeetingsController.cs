@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.Application.Features.Meetings.Commands.CreateMeeting;
 using ShepidiSoft.Application.Features.Meetings.Commands.DeleteMeeting;
+using ShepidiSoft.Application.Features.Meetings.Commands.UpdateMeeting;
 using ShepidiSoft.Application.Features.Meetings.Queries.GetMeetingDetail;
 using ShepidiSoft.Application.Features.Meetings.Queries.GetMeetingList;
 
@@ -45,4 +46,21 @@ public class MeetingsController(IMediator mediator) : BaseApiController(mediator
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
 => CreateActionResult(
 await _mediator.Send(new GetMeetingDetailQuery(id), cancellationToken));
+
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update(int id, UpdateMeetingRequest request, CancellationToken cancellationToken)
+    {
+        var command = new UpdateMeetingCommand
+        (
+            Id: id,
+            Title: request.Title,
+            Description: request.Description,
+            StartTime: request.StartTime,
+            MeetingLink: request.MeetingLink
+        );
+
+        return CreateActionResult(await _mediator.Send(command, cancellationToken));
+    }
 }
