@@ -1,0 +1,3 @@
+﻿namespace ShepidiSoft.Application.Features.CollaborationApplications.Commands.CreateCollaborationApplication;
+
+public sealed record CreateCollaborationApplicationCommandResponse(int Id);
