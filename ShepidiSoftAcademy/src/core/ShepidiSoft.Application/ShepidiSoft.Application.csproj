@@ -13,6 +13,10 @@
     <Folder Include="Features\AssignmentSubmission\Commands\DeleteAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Commands\UpdateAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Queries\" />
+    <Folder Include="Features\CollaborationApplications\Commands\DeleteCollaborationApplication\" />
+    <Folder Include="Features\CollaborationApplications\Commands\UpdateCollaborationApplicationStatus\" />
+    <Folder Include="Features\CollaborationApplications\Queries\GetCollaborationApplicationList\" />
+    <Folder Include="Features\CollaborationApplications\Queries\GetCollaborationApplicationDetail\" />
     <Folder Include="Features\Documents\Commands\CreateDocument\" />
     <Folder Include="Features\Documents\Commands\DeleteDocument\" />
     <Folder Include="Features\Documents\Commands\UpdateDocument\" />
