@@ -17,7 +17,7 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Applicat
         base.OnModelCreating(modelBuilder);
      
     }
-
+    public DbSet<StudentRequest> StudentRequests { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<Activity> Activities { get; set; }
