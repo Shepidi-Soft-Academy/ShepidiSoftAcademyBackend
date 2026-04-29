@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShepidiSoft.Application.Features.CollaborationApplications.Commands.CreateCollaborationApplication;
+using ShepidiSoft.Application.Features.CollaborationApplications.Queries.GetCollaborationApplicationDetail;
 using ShepidiSoft.Application.Features.CollaborationApplications.Queries.GetCollaborationApplicationList;
 using ShepidiSoft.Domain.Entities;
 
@@ -11,6 +12,8 @@ public sealed class CollaborationApplicationMappingProfile : Profile
     {
         CreateMap<CreateCollaborationApplicationCommand,CollaborationApplication>();
         CreateMap<CollaborationApplication, GetCollaborationApplicationListQueryResponse>();
+        CreateMap<CollaborationApplication, GetCollaborationApplicationDetailQueryResponse>();
+
 
     }
 

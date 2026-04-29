@@ -5,6 +5,7 @@ using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.Application.Features.CollaborationApplications.Commands.CreateCollaborationApplication;
 using ShepidiSoft.Application.Features.CollaborationApplications.Commands.DeleteCollaborationApplication;
 using ShepidiSoft.Application.Features.CollaborationApplications.Commands.UpdateCollaborationApplicationStatus;
+using ShepidiSoft.Application.Features.CollaborationApplications.Queries.GetCollaborationApplicationDetail;
 using ShepidiSoft.Application.Features.CollaborationApplications.Queries.GetCollaborationApplicationList;
 
 namespace ShepidiSoft.API.Controllers;
@@ -52,4 +53,9 @@ public sealed class CollaborationApplicationsController(IMediator mediator) : Ba
     await _mediator.Send(new GetCollaborationApplicationListQuery(), cancellationToken));
 
 
+    [HttpGet("{id}")]
+    [Authorize(Roles = "OrganizationMember,Admin")]
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
+    => CreateActionResult(
+        await _mediator.Send(new GetCollaborationApplicationDetailQuery(id), cancellationToken));
 }
