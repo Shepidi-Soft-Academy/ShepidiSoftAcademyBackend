@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
+using ShepidiSoft.API.Requests;
 using ShepidiSoft.Application.Features.Activities.Queries.GetActivityDetail;
 using ShepidiSoft.Application.Features.CareerApplications.Commands.CreateCareerApplication;
 using ShepidiSoft.Application.Features.CareerApplications.Commands.DeleteCareerApplication;
