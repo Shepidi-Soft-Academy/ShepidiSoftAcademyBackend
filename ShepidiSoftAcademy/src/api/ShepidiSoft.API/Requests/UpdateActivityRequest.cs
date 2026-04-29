@@ -1,4 +1,4 @@
-﻿namespace ShepidiSoft.API;
+﻿namespace ShepidiSoft.API.Requests;
 
 public sealed record UpdateActivityRequest(
     string Title,
