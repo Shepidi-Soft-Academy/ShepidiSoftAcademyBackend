@@ -19,7 +19,7 @@ namespace ShepidiSoft.Persistence.StudentRequests
                 .HasMaxLength(200);
             builder.Property(x => x.Description)
                 .IsRequired()
-                .HasMaxLength(2000);
+                .HasMaxLength(3000);
             builder.Property(x => x.StudentRequestStatus)
                 .IsRequired();
             //ilişki

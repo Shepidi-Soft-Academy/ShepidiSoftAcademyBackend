@@ -1,6 +1,6 @@
 ﻿namespace ShepidiSoft.Application.Features.StudentRequests.Queries;
 
-//sadece gereklı alanları doner
+//sadece gereklı alanlar
 public sealed record GetStudentRequestListQueryResponse(
     Guid Id,
     string Title,

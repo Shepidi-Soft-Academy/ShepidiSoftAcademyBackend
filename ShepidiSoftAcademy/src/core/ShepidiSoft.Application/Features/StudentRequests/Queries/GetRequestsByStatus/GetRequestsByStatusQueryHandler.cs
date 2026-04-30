@@ -11,7 +11,7 @@ public sealed class GetRequestsByStatusQueryHandler(
 {
     public async Task<ServiceResult<List<GetStudentRequestListQueryResponse>>> Handle(GetRequestsByStatusQuery request, CancellationToken cancellationToken)
     {
-        // Repository'deki diğer özel metodunu kullanıyoruz
+        
         var requests = await studentRequestRepository.GetByStatusAsync(request.Status);
         var response = mapper.Map<List<GetStudentRequestListQueryResponse>>(requests);
         return ServiceResult<List<GetStudentRequestListQueryResponse>>.Success(response);

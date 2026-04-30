@@ -4,3 +4,4 @@ namespace ShepidiSoft.Application.Features.StudentRequests.Commands.CreateStuden
 
 public sealed record CreateStudentRequestCommand(string Title, string Description)
     : IRequest<ServiceResult<Guid>>;
+//mediatR ıle service Result<guid >> sonucunu dön dıyor IRequest 
