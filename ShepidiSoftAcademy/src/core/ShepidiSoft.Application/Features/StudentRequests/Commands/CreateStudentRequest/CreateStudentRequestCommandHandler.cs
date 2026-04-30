@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using ShepidiSoft.Application.Contracts.Common;
-using ShepidiSoft.Application.Contracts.Identity;
 using ShepidiSoft.Application.Contracts.Persistence;
 using ShepidiSoft.Domain.Entities;
 using ShepidiSoft.Domain.Entities.Enums;

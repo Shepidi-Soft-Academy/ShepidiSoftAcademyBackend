@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace ShepidiSoft.Application.Features.Users.Dtos;
+﻿namespace ShepidiSoft.Application.Features.Users.Dtos;
 
 public sealed record CreateUserRequest(
     string FirstName,

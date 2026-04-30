@@ -11,28 +11,21 @@ namespace ShepidiSoft.Application.Features.StudentRequests.Commands.DeleteStuden
 
 public sealed class DeleteStudentRequestCommandHandler(
     IStudentRequestRepository studentRequestRepository,
-    IUnitOfWork unitOfWork,
-    ICurrentUserService currentUserService
-    ) : IRequestHandler<DeleteStudentRequestCommand, ServiceResult<string>>
+    IUnitOfWork unitOfWork
+    ) : IRequestHandler<DeleteStudentRequestCommand, ServiceResult>
 {
-    public async Task<ServiceResult<string>> Handle(DeleteStudentRequestCommand request, CancellationToken cancellationToken)
+    public async Task<ServiceResult> Handle(DeleteStudentRequestCommand request, CancellationToken cancellationToken)
     {
         var studentRequest = await studentRequestRepository.GetByIdAsync(request.Id);
-        if (studentRequest == null) return ServiceResult<string>.Fail("Talep bulunamadı.");
 
-        var userId = currentUserService.UserId;
-        var isAdmin = currentUserService.IsInRole("Admin");
-        var isOwner = studentRequest.StudentId == userId;
-
-        if (!isAdmin && !isOwner)
-            return ServiceResult<string>.Fail("Bu talebi silme yetkiniz yok.", HttpStatusCode.Forbidden);
-
-        if (!isAdmin && studentRequest.StudentRequestStatus != StudentRequestStatus.Bekliyor)
-            return ServiceResult<string>.Fail("İşleme alınmış talepler silinemez.");
-        //admın degılse sadece beklıyor statusu sıl
+        if(studentRequest is null)
+        {
+            return ServiceResult.Fail("Öğrenci Talebi Bulunamadı", HttpStatusCode.NotFound);
+        }
+       
         studentRequestRepository.Delete(studentRequest);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return ServiceResult<string>.Success("Talep başarıyla silindi.");
+        return ServiceResult.Success(HttpStatusCode.NoContent);
     }
 }
