@@ -19,10 +19,8 @@ public sealed class StudentRequestConfiguration : IEntityTypeConfiguration<Stude
             .IsRequired();
         //ilişki
         builder.HasOne(x => x.Student)
-            .WithMany()
-            .HasForeignKey(x=>x.StudentId)
-            .OnDelete(DeleteBehavior.Cascade);//baglı kayıtları sil
-        builder.HasIndex(x => x.StudentId);
-        builder.HasIndex(x => x.StudentRequestStatus);
+            .WithMany(x => x.StudentRequests)
+            .HasForeignKey(x => x.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

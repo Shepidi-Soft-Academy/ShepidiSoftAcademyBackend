@@ -38,7 +38,7 @@ public static class DependencyInjection
                 .GetSection(ConnectionStringOption.Key)
                 .Get<ConnectionStringOption>();
 
-            options.UseSqlServer(connectionStrings!.SqlServer, sqlOptions =>
+            options.UseNpgsql(connectionStrings!.Npgsql, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(PersistenceAssembly).Assembly.FullName);
             });
