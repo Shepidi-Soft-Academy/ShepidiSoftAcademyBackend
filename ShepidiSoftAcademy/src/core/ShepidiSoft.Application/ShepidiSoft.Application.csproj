@@ -13,6 +13,8 @@
     <Folder Include="Features\AssignmentSubmission\Commands\DeleteAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Commands\UpdateAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Queries\" />
+    <Folder Include="Features\CommunityServices\Commands\UpdateCommunityService\" />
+    <Folder Include="Features\CommunityServices\Queries\" />
     <Folder Include="Features\Documents\Commands\CreateDocument\" />
     <Folder Include="Features\Documents\Commands\DeleteDocument\" />
     <Folder Include="Features\Documents\Commands\UpdateDocument\" />
