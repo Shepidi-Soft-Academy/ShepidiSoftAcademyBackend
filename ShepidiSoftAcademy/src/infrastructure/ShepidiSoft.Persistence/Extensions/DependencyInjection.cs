@@ -7,6 +7,7 @@ using ShepidiSoft.Persistence.Assignments;
 using ShepidiSoft.Persistence.AssignmentSubmissions;
 using ShepidiSoft.Persistence.CareerApplications;
 using ShepidiSoft.Persistence.CollaborationApplications;
+using ShepidiSoft.Persistence.CommunityServices;
 using ShepidiSoft.Persistence.ContactMessages;
 using ShepidiSoft.Persistence.Context;
 using ShepidiSoft.Persistence.Courses;
@@ -75,6 +76,8 @@ public static class DependencyInjection
         services.AddScoped<IMeetingRepository, MeetingRepository>();
         services.AddScoped<ICollaborationApplicationRepository, CollaborationApplicationRepository  >();
         services.AddScoped<INewsRepository, NewsRepository>();
+        services.AddScoped<ICommunityServiceRepository, CommunityServiceRepository>();
+
     }
 
     private static void AddSeeding(IServiceCollection services)
