@@ -13,6 +13,7 @@ using ShepidiSoft.Persistence.Courses;
 using ShepidiSoft.Persistence.Instructors;
 using ShepidiSoft.Persistence.Interceptors;
 using ShepidiSoft.Persistence.Meetings;
+using ShepidiSoft.Persistence.Newss;
 using ShepidiSoft.Persistence.Offerings;
 using ShepidiSoft.Persistence.Options;
 using ShepidiSoft.Persistence.OrganizationMembers;
@@ -23,9 +24,6 @@ using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.Persistence.Seedings.Seeders;
 using ShepidiSoft.Persistence.StudentRequests;
 using ShepidiSoft.Persistence.Students;
-using ShepidiSoft.Persistence.Meetings;
-using ShepidiSoft.Persistence.CollaborationApplications;
-using ShepidiSoft.Persistence.Newss;
 
 namespace ShepidiSoft.Persistence.Extensions;
 
