@@ -18,7 +18,7 @@ public sealed class StudentRequestRepository(AppDbContext context) : GenericRepo
 
     public async Task<List<StudentRequest>> GetByStudentIdAsync(Guid studentId)
     {
-        return await Context.StudentRequests
+        return await context.StudentRequests
              .Where(x => x.StudentId == studentId)
              .ToListAsync();
     }//ogrenci kendi talebini

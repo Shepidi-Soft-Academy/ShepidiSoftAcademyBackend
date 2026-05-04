@@ -38,5 +38,6 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Applicat
     public DbSet<CareerApplication> CareerApplications { get; set; }
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
     public DbSet<CollaborationApplication> CollaborationApplications { get; set; }
+    public DbSet<CommunityService> CommunityServices { get; set; }
 
 }
