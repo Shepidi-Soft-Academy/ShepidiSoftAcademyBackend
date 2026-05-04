@@ -1,6 +1,4 @@
-﻿
-
-using ShepidiSoft.Domain.Entities;
+﻿using ShepidiSoft.Domain.Entities;
 
 namespace ShepidiSoft.Application.Contracts.Persistence;
 
