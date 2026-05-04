@@ -9,6 +9,7 @@ using ShepidiSoft.Application.Features.CareerApplications.Commands.DeleteCareerA
 using ShepidiSoft.Application.Features.CareerApplications.Commands.UpdateCareerApplicationStatus;
 using ShepidiSoft.Application.Features.CareerApplications.Queries.GetCareerApplicationDetail;
 using ShepidiSoft.Application.Features.CareerApplications.Queries.GetCareerApplications;
+using ShepidiSoft.Application.Features.CommunityServices.Commands.UpdateCommunityService;
 
 namespace ShepidiSoft.API.Controllers;
 
@@ -58,6 +59,7 @@ CancellationToken cancellationToken)
     public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     => CreateActionResult(
         await _mediator.Send(new GetCareerApplicationDetailQuery(id), cancellationToken));
+
 
 
 
