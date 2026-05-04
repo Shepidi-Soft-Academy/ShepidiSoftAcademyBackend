@@ -7,12 +7,14 @@ using ShepidiSoft.Persistence.Assignments;
 using ShepidiSoft.Persistence.AssignmentSubmissions;
 using ShepidiSoft.Persistence.CareerApplications;
 using ShepidiSoft.Persistence.CollaborationApplications;
+using ShepidiSoft.Persistence.CommunityServices;
 using ShepidiSoft.Persistence.ContactMessages;
 using ShepidiSoft.Persistence.Context;
 using ShepidiSoft.Persistence.Courses;
 using ShepidiSoft.Persistence.Instructors;
 using ShepidiSoft.Persistence.Interceptors;
 using ShepidiSoft.Persistence.Meetings;
+using ShepidiSoft.Persistence.Newss;
 using ShepidiSoft.Persistence.Offerings;
 using ShepidiSoft.Persistence.Options;
 using ShepidiSoft.Persistence.OrganizationMembers;
@@ -23,9 +25,6 @@ using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.Persistence.Seedings.Seeders;
 using ShepidiSoft.Persistence.StudentRequests;
 using ShepidiSoft.Persistence.Students;
-using ShepidiSoft.Persistence.Meetings;
-using ShepidiSoft.Persistence.CollaborationApplications;
-using ShepidiSoft.Persistence.Newss;
 
 namespace ShepidiSoft.Persistence.Extensions;
 
@@ -77,6 +76,8 @@ public static class DependencyInjection
         services.AddScoped<IMeetingRepository, MeetingRepository>();
         services.AddScoped<ICollaborationApplicationRepository, CollaborationApplicationRepository  >();
         services.AddScoped<INewsRepository, NewsRepository>();
+        services.AddScoped<ICommunityServiceRepository, CommunityServiceRepository>();
+
     }
 
     private static void AddSeeding(IServiceCollection services)

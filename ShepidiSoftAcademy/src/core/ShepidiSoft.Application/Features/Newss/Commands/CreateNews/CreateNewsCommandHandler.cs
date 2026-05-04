@@ -25,17 +25,12 @@ public sealed class CreateNewsCommandHandler(
         //Yayınlanma tarihini kontrol etmek icin
         if (request.IsPublished)
         {
-            news.PublishedAt = DateTime.Now;
+            news.PublishedAt = DateTime.UtcNow;
         }
 
         await newsRepository.AddAsync(news);
 
         var result = await unitOfWork.SaveChangesAsync(cancellationToken);
-        if (result <= 0)
-        {
-            return ServiceResult<CreateNewsCommandResponse>.Fail("Haber kaydedilirken bir hata oluştu.");
-        }
-
         var response = new CreateNewsCommandResponse(news.Id, news.Slug);
         return ServiceResult<CreateNewsCommandResponse>.Success(response);
     }
