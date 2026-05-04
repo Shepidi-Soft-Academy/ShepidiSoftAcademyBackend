@@ -21,4 +21,10 @@ public sealed class CurrentUserService(IHttpContextAccessor httpContextAccessor)
             return parsedUserId;
         }
     }
+
+    public bool IsInRole(string roleName)
+    {
+        // Kullanıcının rollerine bakar
+        return httpContextAccessor.HttpContext?.User?.IsInRole(roleName) ?? false;
+    }
 }

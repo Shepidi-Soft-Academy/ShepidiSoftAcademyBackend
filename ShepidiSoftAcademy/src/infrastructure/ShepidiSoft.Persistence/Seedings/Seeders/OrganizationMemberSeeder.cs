@@ -19,7 +19,7 @@ public class OrganizationMemberSeeder(
             LastName: "User",
             Email: "admin@shepidisoft.com",
             PhoneNumber: "+905551234567",
-            DateOfBirth: new DateTime(1990, 1, 1),
+             DateOfBirth : new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             LinkednUrl: null,
             PhotoUrl: null,
             GithubUrl: null,

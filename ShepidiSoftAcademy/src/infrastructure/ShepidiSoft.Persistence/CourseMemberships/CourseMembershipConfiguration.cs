@@ -26,15 +26,15 @@ namespace ShepidiSoft.Persistence.CourseMemberships
                    .IsRequired()
                    .HasMaxLength(50);
 
-            // JoinedAt
+            // JoinedAt - FIXED FOR POSTGRESQL
             builder.Property(cm => cm.JoinedAt)
                    .IsRequired()
-                   .HasDefaultValueSql("GETUTCDATE()");
+                   .HasDefaultValueSql("now()");
 
-            // Audit fields
+            // Audit fields - FIXED FOR POSTGRESQL
             builder.Property(cm => cm.Created)
                    .IsRequired()
-                   .HasDefaultValueSql("GETUTCDATE()");
+                   .HasDefaultValueSql("now()");
 
             builder.Property(cm => cm.Updated)
                    .IsRequired(false);

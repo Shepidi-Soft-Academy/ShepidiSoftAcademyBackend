@@ -6,19 +6,22 @@ using ShepidiSoft.Persistence.Activities;
 using ShepidiSoft.Persistence.Assignments;
 using ShepidiSoft.Persistence.AssignmentSubmissions;
 using ShepidiSoft.Persistence.CareerApplications;
+using ShepidiSoft.Persistence.CollaborationApplications;
 using ShepidiSoft.Persistence.ContactMessages;
 using ShepidiSoft.Persistence.Context;
 using ShepidiSoft.Persistence.Courses;
 using ShepidiSoft.Persistence.Instructors;
 using ShepidiSoft.Persistence.Interceptors;
+using ShepidiSoft.Persistence.Meetings;
 using ShepidiSoft.Persistence.Offerings;
 using ShepidiSoft.Persistence.Options;
 using ShepidiSoft.Persistence.OrganizationMembers;
-using ShepidiSoft.Persistence.Organizations;
 using ShepidiSoft.Persistence.OrganizationPositions;
+using ShepidiSoft.Persistence.Organizations;
 using ShepidiSoft.Persistence.Outbox;
 using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.Persistence.Seedings.Seeders;
+using ShepidiSoft.Persistence.StudentRequests;
 using ShepidiSoft.Persistence.Students;
 using ShepidiSoft.Persistence.Meetings;
 using ShepidiSoft.Persistence.CollaborationApplications;
@@ -38,7 +41,7 @@ public static class DependencyInjection
                 .GetSection(ConnectionStringOption.Key)
                 .Get<ConnectionStringOption>();
 
-            options.UseSqlServer(connectionStrings!.SqlServer, sqlOptions =>
+            options.UseNpgsql(connectionStrings!.Npgsql, sqlOptions =>
             {
                 sqlOptions.MigrationsAssembly(typeof(PersistenceAssembly).Assembly.FullName);
             });
@@ -64,6 +67,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IOrganizationMemberRepository, OrganizationMemberRepository>();
+        services.AddScoped<IStudentRequestRepository, StudentRequestRepository>();
         services.AddScoped<IOrganizationPositionRepository, OrganizationPositionRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();
         services.AddScoped<IAssignmentSubmissionRepository, AssignmentSubmissionRepository>();
