@@ -18,7 +18,7 @@ public sealed class DeleteNewsCommandHandler(
         //Haber bulunamadıysa Fail dön
         if (news is null)
         {
-            return ServiceResult.Fail("Haber bulunamadı!");
+            return ServiceResult.Fail("Haber bulunamadı!",HttpStatusCode.NotFound);
         }
 
         //Haberi silme işlemine sok
