@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ShepidiSoft.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class PostgresInıtialCreate : Migration
+    public partial class PsInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -203,6 +203,31 @@ namespace ShepidiSoft.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Meetings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Newss",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    Summary = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Slug = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    ThumbnailUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    BannerUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    ViewCount = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    IsPublished = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    PublishedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Newss", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -982,6 +1007,12 @@ namespace ShepidiSoft.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Newss_Slug",
+                table: "Newss",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offerings_IsActive",
                 table: "Offerings",
                 column: "IsActive");
@@ -1149,6 +1180,9 @@ namespace ShepidiSoft.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Meetings");
+
+            migrationBuilder.DropTable(
+                name: "Newss");
 
             migrationBuilder.DropTable(
                 name: "Offerings");

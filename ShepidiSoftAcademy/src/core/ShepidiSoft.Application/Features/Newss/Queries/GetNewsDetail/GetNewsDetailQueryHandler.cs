@@ -2,7 +2,6 @@
 using MediatR;
 using ShepidiSoft.Application.Contracts.Persistence;
 
-
 namespace ShepidiSoft.Application.Features.Newss.Queries.GetNewsDetail;
 
 public sealed class GetNewsDetailQueryHandler(
@@ -17,11 +16,8 @@ public sealed class GetNewsDetailQueryHandler(
         var news = await newsRepository.GetBySlugAsync(request.Slug);
 
         if (news is null)
-        {
-            return ServiceResult<GetNewsDetailQueryResponse>.Fail("Haber bulunamadı!");
-        }
+            return ServiceResult<GetNewsDetailQueryResponse>.Fail("Haber bulunamadı!",System.Net.HttpStatusCode.NotFound);
 
-        
         news.ViewCount++;
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
