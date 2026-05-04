@@ -1,9 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
+using ShepidiSoft.API.Requests;
 using ShepidiSoft.Application.Features.Activities.Commands.DeleteActivity;
 using ShepidiSoft.Application.Features.CommunityServices.Commands.CreateCommunityService;
 using ShepidiSoft.Application.Features.CommunityServices.Commands.DeleteCommunityService;
+using ShepidiSoft.Application.Features.CommunityServices.Commands.UpdateCommunityService;
 
 namespace ShepidiSoft.API.Controllers;
 
@@ -25,5 +28,23 @@ public class CommunityServicesController(IMediator mediator) : BaseApiController
         return CreateActionResult(
             await _mediator.Send(command, cancellationToken));
     }
+
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update(int id, UpdateCommunityServiceRequest request, CancellationToken cancellationToken)
+    {
+        var command = new UpdateCommunityServiceCommand(
+            Id: id,
+            Title: request.Title,
+            Description: request.Description,
+            IsActive: request.IsActive,
+            ImageUrl: request.ImageUrl
+            );
+
+        var result = await _mediator.Send(command, cancellationToken);
+        return CreateActionResult(result);
+    }
+
 
 }
