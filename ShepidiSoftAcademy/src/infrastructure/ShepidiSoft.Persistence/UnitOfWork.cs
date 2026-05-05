@@ -8,13 +8,13 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
 {
     public async Task<int> SaveChangesAsync(CancellationToken token)
     {
-        var result = await context.SaveChangesAsync(token);
-
-        if (result <= 0)
+        try
         {
-            throw new Exception("Veritabanı işlemleri sırasında bir hata oluştu.");
+            return await context.SaveChangesAsync(token);
         }
-
-        return result;
+        catch
+        {
+            throw new Exception("Bir hata meydana geldi.");
+        }
     }
 }

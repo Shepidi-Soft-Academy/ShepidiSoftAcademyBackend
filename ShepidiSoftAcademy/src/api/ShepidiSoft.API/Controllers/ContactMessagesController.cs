@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
-using ShepidiSoft.Application.Features.Activities.Commands.DeleteActivity;
 using ShepidiSoft.Application.Features.ContactMessages.Commands.CreateContactMessage;
 using ShepidiSoft.Application.Features.ContactMessages.Commands.DeleteContactMessage;
 using ShepidiSoft.Application.Features.ContactMessages.Commands.MarkContactMessageAsRead;
