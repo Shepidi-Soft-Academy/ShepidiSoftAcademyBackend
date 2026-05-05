@@ -59,9 +59,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.SetIsOriginAllowed(origin => true)
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
@@ -96,8 +97,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 
-app.UseCors("AllowAll"); // UseAuthorization'dan ÖNCE olmalı
+app.UseRouting();
 
+app.UseCors("AllowAll");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 

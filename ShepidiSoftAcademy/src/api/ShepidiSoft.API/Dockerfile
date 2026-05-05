@@ -6,9 +6,8 @@ WORKDIR /src
 COPY . .
 
 # Restore + publish
-RUN PROJECT_PATH=$(find . -name ShepidiSoft.API.csproj) && \
-    dotnet restore "$PROJECT_PATH" && \
-    dotnet publish "$PROJECT_PATH" -c Release -o /app/publish
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

@@ -1,6 +1,9 @@
 <Solution>
-  <Folder Name="/src/" />
+  <Folder Name="/src/">
+    <File Path="src/api/ShepidiSoft.API/Dockerfile" />
+  </Folder>
   <Folder Name="/src/api/">
+    <File Path="src/api/ShepidiSoft.API/Dockerfile" />
     <Project Path="src/api/ShepidiSoft.API/ShepidiSoft.API.csproj" />
   </Folder>
   <Folder Name="/src/core/">
@@ -13,7 +16,4 @@
     <Project Path="src/infrastructure/ShepidiSoft.Notification/ShepidiSoft.Notification.csproj" />
     <Project Path="src/infrastructure/ShepidiSoft.Persistence/ShepidiSoft.Persistence.csproj" />
   </Folder>
-  <Project Path="docker-compose.dcproj">
-    <Build />
-  </Project>
 </Solution>
