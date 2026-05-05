@@ -13,4 +13,7 @@
     <Project Path="src/infrastructure/ShepidiSoft.Notification/ShepidiSoft.Notification.csproj" />
     <Project Path="src/infrastructure/ShepidiSoft.Persistence/ShepidiSoft.Persistence.csproj" />
   </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>

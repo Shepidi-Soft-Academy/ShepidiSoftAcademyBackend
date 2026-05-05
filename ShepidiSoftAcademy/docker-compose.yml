@@ -1,0 +1,6 @@
+services:
+  shepidisoft.api:
+    image: ${DOCKER_REGISTRY-}shepidisoftapi
+    build:
+      context: .
+      dockerfile: src/api/ShepidiSoft.API/Dockerfile
