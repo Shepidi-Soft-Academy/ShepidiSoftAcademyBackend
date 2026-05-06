@@ -15,7 +15,7 @@ public sealed class CreateContactMessageCommandHandler(
     {
         var contactMessage=mapper.Map<ContactMessage>(request);
 
-        contactMessage.SentAt=DateTime.Now;
+        contactMessage.SentAt=DateTime.UtcNow;
 
         await contactMessageRepository.AddAsync(contactMessage);
 
