@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ShepidiSoft.Application;
-using System.Net;
 
 public class FluentValidationFilter : IAsyncActionFilter, IAsyncExceptionFilter
 {

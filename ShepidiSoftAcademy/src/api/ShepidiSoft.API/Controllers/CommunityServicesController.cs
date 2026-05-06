@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.API.Requests;
 using ShepidiSoft.Application.Features.Activities.Commands.DeleteActivity;
+using ShepidiSoft.Application.Features.CareerApplications.Queries.GetCareerApplications;
 using ShepidiSoft.Application.Features.CommunityServices.Commands.CreateCommunityService;
 using ShepidiSoft.Application.Features.CommunityServices.Commands.DeleteCommunityService;
 using ShepidiSoft.Application.Features.CommunityServices.Commands.UpdateCommunityService;
+using ShepidiSoft.Application.Features.CommunityServices.Queries.GetCommunityServiceList;
 
 namespace ShepidiSoft.API.Controllers;
 
@@ -45,6 +47,18 @@ public class CommunityServicesController(IMediator mediator) : BaseApiController
         var result = await _mediator.Send(command, cancellationToken);
         return CreateActionResult(result);
     }
+
+
+    [HttpGet("admin")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAllForAdmin(CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(new GetCommunityServiceListAdminQuery(), cancellationToken));
+
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(new GetCommunityServiceListQuery(), cancellationToken));
 
 
 }
