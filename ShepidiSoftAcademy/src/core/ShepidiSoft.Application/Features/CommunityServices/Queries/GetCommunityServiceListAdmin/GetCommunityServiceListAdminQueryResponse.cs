@@ -4,5 +4,6 @@ public sealed record GetCommunityServiceListAdminQueryResponse(
     int Id,
     string Title,
     bool IsActive,
+    string Description,
     string CreatedByName
     );

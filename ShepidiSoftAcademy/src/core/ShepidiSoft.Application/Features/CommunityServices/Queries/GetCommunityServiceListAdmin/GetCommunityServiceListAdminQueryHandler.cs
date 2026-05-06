@@ -40,6 +40,7 @@ public sealed class GetCommunityServiceListAdminQueryHandler(
                 Id: cs.Id,
                 Title: cs.Title,
                 IsActive: cs.IsActive,
+                Description: cs.Description,
                 CreatedByName: createdByName
             );
         }).ToList();
