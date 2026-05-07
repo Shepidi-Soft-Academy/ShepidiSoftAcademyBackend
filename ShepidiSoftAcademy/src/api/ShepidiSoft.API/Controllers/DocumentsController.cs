@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ShepidiSoft.API.Controllers
+namespace ShepidiSoft.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class DocumentsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class DocumentsController : ControllerBase
-    {
-    }
 }

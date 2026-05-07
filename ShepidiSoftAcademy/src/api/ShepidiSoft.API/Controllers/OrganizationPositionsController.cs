@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
-using ShepidiSoft.Application.Features.Activities.Queries.GetActivityList;
 using ShepidiSoft.Application.Features.OrganizationPositions.Commands.CreateOrganizationPosition;
 using ShepidiSoft.Application.Features.OrganizationPositions.Commands.DeleteOrganizationPosition;
 using ShepidiSoft.Application.Features.OrganizationPositions.Queries.GetOrganizationPositions;

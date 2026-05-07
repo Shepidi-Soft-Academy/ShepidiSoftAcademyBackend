@@ -3,13 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.API.Requests;
-using ShepidiSoft.Application.Features.Activities.Queries.GetActivityDetail;
 using ShepidiSoft.Application.Features.CareerApplications.Commands.CreateCareerApplication;
 using ShepidiSoft.Application.Features.CareerApplications.Commands.DeleteCareerApplication;
 using ShepidiSoft.Application.Features.CareerApplications.Commands.UpdateCareerApplicationStatus;
 using ShepidiSoft.Application.Features.CareerApplications.Queries.GetCareerApplicationDetail;
 using ShepidiSoft.Application.Features.CareerApplications.Queries.GetCareerApplications;
-using ShepidiSoft.Application.Features.CommunityServices.Commands.UpdateCommunityService;
 
 namespace ShepidiSoft.API.Controllers;
 

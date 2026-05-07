@@ -7,23 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Documents\**" />
+    <Compile Remove="Features\DocumentTopics\**" />
+    <Compile Remove="Features\Organizations\**" />
+    <EmbeddedResource Remove="Features\Documents\**" />
+    <EmbeddedResource Remove="Features\DocumentTopics\**" />
+    <EmbeddedResource Remove="Features\Organizations\**" />
+    <None Remove="Features\Documents\**" />
+    <None Remove="Features\DocumentTopics\**" />
+    <None Remove="Features\Organizations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Features\Announcements\Commands\DeleteAnnouncement\" />
     <Folder Include="Features\Announcements\Commands\UpdateAnnouncement\" />
     <Folder Include="Features\Announcements\Queries\" />
     <Folder Include="Features\AssignmentSubmission\Commands\DeleteAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Commands\UpdateAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Queries\" />
-    <Folder Include="Features\Documents\Commands\CreateDocument\" />
-    <Folder Include="Features\Documents\Commands\DeleteDocument\" />
-    <Folder Include="Features\Documents\Commands\UpdateDocument\" />
-    <Folder Include="Features\Documents\Queries\" />
-    <Folder Include="Features\DocumentTopics\Commands\CreateDocumentTopic\" />
-    <Folder Include="Features\DocumentTopics\Commands\DeleteDocumentTopic\" />
-    <Folder Include="Features\DocumentTopics\Commands\UpdateDocumentTopic\" />
-    <Folder Include="Features\DocumentTopics\Queries\" />
     <Folder Include="Features\OrganizationPositions\Commands\UpdateOrganizationPosition\" />
-    <Folder Include="Features\Organizations\Commands\UpdateOrganization\" />
-    <Folder Include="Features\Organizations\Queries\" />
     <Folder Include="Features\ProjectImages\Commands\CreateProjectImage\" />
     <Folder Include="Features\ProjectImages\Commands\DeleteProjectImage\" />
     <Folder Include="Features\ProjectImages\Commands\UpdateProjectImage\" />

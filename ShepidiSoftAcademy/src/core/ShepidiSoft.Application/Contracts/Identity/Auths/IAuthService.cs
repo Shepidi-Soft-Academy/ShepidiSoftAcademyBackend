@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
-using ShepidiSoft.Application.Features.Auths;
+﻿using ShepidiSoft.Application.Features.Auths;
 
 namespace ShepidiSoft.Application.Contracts.Identity.Auths;
 

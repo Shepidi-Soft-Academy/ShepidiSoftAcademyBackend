@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.API.Requests;
-using ShepidiSoft.Application.Features.Activities.Queries.GetActivityDetail;
 using ShepidiSoft.Application.Features.Offerings.Commands.CreateOffering;
 using ShepidiSoft.Application.Features.Offerings.Commands.DeleteOffering;
 using ShepidiSoft.Application.Features.Offerings.Commands.UpdateOffering;
