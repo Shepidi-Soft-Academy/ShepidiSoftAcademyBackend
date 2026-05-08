@@ -1,9 +1,72 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ShepidiSoft.Application.Features.Documents.Commands.ChangeStatus;
+using ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
+using ShepidiSoft.Application.Features.Documents.Commands.UpdateDocument;
+using ShepidiSoft.Application.Features.Documents.Queries.GetAllDocumentsQuery;
+using ShepidiSoft.Application.Features.Documents.Queries.GetDocumentsByStatusQuery;
+using ShepidiSoft.Application.Features.Documents.Queries.GetUserDocumentsQuery;
+using ShepidiSoft.Domain.Entities.Enums;
 
 namespace ShepidiSoft.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DocumentsController : ControllerBase
+public class DocumentsController(IMediator mediator) : ControllerBase
 {
+   
+
+    
+    [HttpGet("all")]
+     [Authorize(Roles = "Admin")] 
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await mediator.Send(new GetAllDocumentsQuery());
+        return Ok(result);
+    }
+
+    // Öğrenc Sadece kendi dokümanlarını listeler
+    [HttpGet("my-documents/{userId}")]
+    public async Task<IActionResult> GetMyDocuments(string userId)
+    {
+        var result = await mediator.Send(new GetUserDocumentsQuery(userId));
+        return Ok(result);
+    }
+
+    // Admin Statüye göre filtreler
+    [HttpGet("by-status")]
+    public async Task<IActionResult> GetByStatus([FromQuery] DocumentStatus status)
+    {
+        var result = await mediator.Send(new GetDocumentsByStatusQuery(status));
+        return Ok(result);
+    }
+
+
+    // yeni doküman oluşturma
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateDocumentCommand command)
+    {
+        var result = await mediator.Send(command);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+    // Doküman  Güncelleme adece onaylanmamışsa
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateDocumentCommand command)
+    {
+        var result = await mediator.Send(command);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+   
+    [HttpPatch("change-status")]
+     [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ChangeStatus([FromBody] ChangeDocumentStatusCommand command)
+    {
+        var result = await mediator.Send(command);
+        return result.IsSuccess ? Ok(result) : BadRequest(result);
+    }
+
+    
 }
