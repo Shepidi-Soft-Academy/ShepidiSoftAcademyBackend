@@ -15,8 +15,6 @@ namespace ShepidiSoft.API.Controllers;
 [ApiController]
 public class DocumentsController(IMediator mediator) : ControllerBase
 {
-   
-
     
     [HttpGet("all")]
      [Authorize(Roles = "Admin")] 
@@ -36,6 +34,8 @@ public class DocumentsController(IMediator mediator) : ControllerBase
 
     // Admin Statüye göre filtreler
     [HttpGet("by-status")]
+    [Authorize(Roles = "Admin")]
+
     public async Task<IActionResult> GetByStatus([FromQuery] DocumentStatus status)
     {
         var result = await mediator.Send(new GetDocumentsByStatusQuery(status));

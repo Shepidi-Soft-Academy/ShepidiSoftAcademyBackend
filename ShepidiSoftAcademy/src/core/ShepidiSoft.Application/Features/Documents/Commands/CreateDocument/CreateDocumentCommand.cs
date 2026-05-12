@@ -11,6 +11,5 @@ namespace ShepidiSoft.Application.Features.Documents.Commands.CreateDocument
     int DocumentTopicId,
     string Title,
     string? Description,
-    string FileUrl,
-    string UploadedByUserId) :  IRequest<ServiceResult<int>>;
+    string FileUrl) :  IRequest<ServiceResult<int>>;
 }

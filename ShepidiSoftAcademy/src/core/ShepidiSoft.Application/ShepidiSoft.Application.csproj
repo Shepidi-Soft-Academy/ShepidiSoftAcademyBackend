@@ -19,7 +19,6 @@
     <Folder Include="Features\AssignmentSubmission\Commands\DeleteAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Commands\UpdateAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Queries\" />
-    <Folder Include="Features\DocumentTopics\" />
     <Folder Include="Features\OrganizationPositions\Commands\UpdateOrganizationPosition\" />
     <Folder Include="Features\ProjectImages\Commands\CreateProjectImage\" />
     <Folder Include="Features\ProjectImages\Commands\DeleteProjectImage\" />
