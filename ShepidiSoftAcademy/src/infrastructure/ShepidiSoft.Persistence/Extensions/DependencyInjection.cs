@@ -11,6 +11,8 @@ using ShepidiSoft.Persistence.CommunityServices;
 using ShepidiSoft.Persistence.ContactMessages;
 using ShepidiSoft.Persistence.Context;
 using ShepidiSoft.Persistence.Courses;
+using ShepidiSoft.Persistence.Documents;
+using ShepidiSoft.Persistence.DocumentTopics;
 using ShepidiSoft.Persistence.Instructors;
 using ShepidiSoft.Persistence.Interceptors;
 using ShepidiSoft.Persistence.Meetings;
@@ -77,6 +79,8 @@ public static class DependencyInjection
         services.AddScoped<ICollaborationApplicationRepository, CollaborationApplicationRepository  >();
         services.AddScoped<INewsRepository, NewsRepository>();
         services.AddScoped<ICommunityServiceRepository, CommunityServiceRepository>();
+        services.AddScoped<IDocumentRepository, DocumentRepository>();
+        services.AddScoped<IDocumentTopicRepository, DocumentTopicRepository>();
 
     }
 

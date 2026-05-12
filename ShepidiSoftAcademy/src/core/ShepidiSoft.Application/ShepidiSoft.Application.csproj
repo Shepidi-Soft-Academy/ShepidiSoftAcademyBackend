@@ -7,14 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Documents\**" />
-    <Compile Remove="Features\DocumentTopics\**" />
     <Compile Remove="Features\Organizations\**" />
-    <EmbeddedResource Remove="Features\Documents\**" />
-    <EmbeddedResource Remove="Features\DocumentTopics\**" />
     <EmbeddedResource Remove="Features\Organizations\**" />
-    <None Remove="Features\Documents\**" />
-    <None Remove="Features\DocumentTopics\**" />
     <None Remove="Features\Organizations\**" />
   </ItemGroup>
 
