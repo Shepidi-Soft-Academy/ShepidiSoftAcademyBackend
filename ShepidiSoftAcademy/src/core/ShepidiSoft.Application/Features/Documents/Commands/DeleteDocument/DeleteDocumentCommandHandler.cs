@@ -1,32 +1,27 @@
 ﻿using MediatR;
 using ShepidiSoft.Application.Contracts.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
-namespace ShepidiSoft.Application.Features.Documents.Commands.DeleteDocument
+namespace ShepidiSoft.Application.Features.Documents.Commands.DeleteDocument;
+
+public sealed class DeleteDocumentCommandHandler(
+ IDocumentRepository documentRepository,
+ IUnitOfWork unitOfWork) : IRequestHandler<DeleteDocumentCommand, ServiceResult<bool>>
 {
-    public sealed class DeleteDocumentCommandHandler(
-     IDocumentRepository documentRepository,
-     IUnitOfWork unitOfWork) : IRequestHandler<DeleteDocumentCommand, ServiceResult<bool>>
+    public async Task<ServiceResult<bool>> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
     {
-        public async Task<ServiceResult<bool>> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
-        {
-            //  Döküman var mı kontrolü
-            var document = await documentRepository.GetByIdAsync(request.Id);
+        //  Döküman var mı kontrolü
+        var document = await documentRepository.GetByIdAsync(request.Id);
 
-            if (document == null)
-                return ServiceResult<bool>.Fail("Silinmek istenen doküman bulunamadı.");
+        if (document is null)
+            return ServiceResult<bool>.Fail("Silinmek istenen doküman bulunamadı.",HttpStatusCode.NotFound);
 
-          
-            
-            documentRepository.Delete(document);
+      
+        
+        documentRepository.Delete(document);
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return ServiceResult<bool>.Success(true);
-        }
+        return ServiceResult<bool>.Success(true,HttpStatusCode.NoContent);
     }
 }

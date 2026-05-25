@@ -17,7 +17,7 @@ public sealed class CreateContactMessageCommandHandler(
 
         contactMessage.SentAt=DateTime.UtcNow;
 
-        await contactMessageRepository.AddAsync(contactMessage);
+        await contactMessageRepository.AddAsync(contactMessage);  // memory level ope
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
@@ -26,5 +26,6 @@ public sealed class CreateContactMessageCommandHandler(
         
     }
 
-  
+
+
 }

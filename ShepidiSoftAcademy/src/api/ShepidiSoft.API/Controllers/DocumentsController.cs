@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.Application.Features.Documents.Commands.ChangeStatus;
 using ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
 using ShepidiSoft.Application.Features.Documents.Commands.UpdateDocument;
@@ -11,9 +12,8 @@ using ShepidiSoft.Domain.Entities.Enums;
 
 namespace ShepidiSoft.API.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
-public class DocumentsController(IMediator mediator) : ControllerBase
+
+public sealed class DocumentsController(IMediator mediator) : BaseApiController(mediator)
 {
     
     [HttpGet("all")]

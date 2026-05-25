@@ -6,6 +6,7 @@ using ShepidiSoft.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace ShepidiSoft.Application.Features.Documents.Commands.UpdateDocument
         public async Task<ServiceResult<int>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await documentRepository.GetByIdAsync(request.Id);
-            if (document == null) return ServiceResult<int>.Fail("Doküman bulunamadı.");
+            if (document == null) return ServiceResult<int>.Fail("Doküman bulunamadı.",HttpStatusCode.NotFound);
 
             //  Sadece döküman sahibi günclesın 
              if (document.UploadedByUserId != currentUserService.UserId.ToString()) 

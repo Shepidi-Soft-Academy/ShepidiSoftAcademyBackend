@@ -5,6 +5,7 @@ using ShepidiSoft.Application.Contracts.Common;
 using ShepidiSoft.Application.Contracts.Persistence;
 using ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
 using ShepidiSoft.Domain.Entities;
+using System.Net;
 
 public sealed class CreateDocumentCommandHandler(
     IDocumentRepository documentRepository,
@@ -28,7 +29,7 @@ public sealed class CreateDocumentCommandHandler(
             var currentUserIdGuid = currentUserService.UserId;
 
             if (currentUserIdGuid == null)
-                return ServiceResult<int>.Fail("Kullanıcı oturumu bulunamadı.");
+                return ServiceResult<int>.Fail("Kullanıcı oturumu bulunamadı.",HttpStatusCode.Unauthorized);
 
 
             document.UploadedByUserId = currentUserIdGuid.Value.ToString();
@@ -37,7 +38,7 @@ public sealed class CreateDocumentCommandHandler(
             await documentRepository.AddAsync(document);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return ServiceResult<int>.Success(document.Id);
+            return ServiceResult<int>.Success(document.Id,HttpStatusCode.Created);
         }
         catch (Exception ex)
         {

@@ -7,27 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
+    <Compile Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
+    <Compile Remove="Features\Announcements\Queries\**" />
     <Compile Remove="Features\Organizations\**" />
+    <Compile Remove="Features\ProjectImages\**" />
+    <Compile Remove="Features\Projects\**" />
+    <EmbeddedResource Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
+    <EmbeddedResource Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
+    <EmbeddedResource Remove="Features\Announcements\Queries\**" />
     <EmbeddedResource Remove="Features\Organizations\**" />
+    <EmbeddedResource Remove="Features\ProjectImages\**" />
+    <EmbeddedResource Remove="Features\Projects\**" />
+    <None Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
+    <None Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
+    <None Remove="Features\Announcements\Queries\**" />
     <None Remove="Features\Organizations\**" />
+    <None Remove="Features\ProjectImages\**" />
+    <None Remove="Features\Projects\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Announcements\Commands\DeleteAnnouncement\" />
-    <Folder Include="Features\Announcements\Commands\UpdateAnnouncement\" />
-    <Folder Include="Features\Announcements\Queries\" />
     <Folder Include="Features\AssignmentSubmission\Commands\DeleteAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Commands\UpdateAssignmentSubmission\" />
     <Folder Include="Features\AssignmentSubmission\Queries\" />
     <Folder Include="Features\OrganizationPositions\Commands\UpdateOrganizationPosition\" />
-    <Folder Include="Features\ProjectImages\Commands\CreateProjectImage\" />
-    <Folder Include="Features\ProjectImages\Commands\DeleteProjectImage\" />
-    <Folder Include="Features\ProjectImages\Commands\UpdateProjectImage\" />
-    <Folder Include="Features\ProjectImages\Queries\" />
-    <Folder Include="Features\Projects\Commands\CreateProject\" />
-    <Folder Include="Features\Projects\Commands\DeleteProject\" />
-    <Folder Include="Features\Projects\Commands\UpdateProject\" />
-    <Folder Include="Features\Projects\Queries\" />
     <Folder Include="Features\Students\Queries\GetStudentsByCourse\" />
     <Folder Include="Features\Students\Queries\GetStudentDetail\" />
   </ItemGroup>
