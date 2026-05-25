@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShepidiSoft.Application;
 using ShepidiSoft.Application.Contracts.Identity;
@@ -158,6 +158,51 @@ public sealed class UserService(UserManager<ApplicationUser> userManager) : IUse
         }
 
         await userManager.UpdateSecurityStampAsync(user);
+
+        return ServiceResult.Success();
+    }
+
+    public async Task<ServiceResult<string>> GeneratePasswordResetTokenAsync(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user is null)
+            return ServiceResult<string>.Fail("Kullanıcı bulunamadı!", HttpStatusCode.NotFound);
+
+        // Generate a cryptographically secure token
+        var randomBytes = System.Security.Cryptography.RandomNumberGenerator.GetBytes(64);
+        var token = Convert.ToBase64String(randomBytes);
+
+        user.PasswordResetToken = token;
+        user.ResetTokenExpires = DateTime.UtcNow.AddMinutes(30);
+
+        var updateResult = await userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+            return ServiceResult<string>.Fail("Token oluşturulurken bir hata meydana geldi.", HttpStatusCode.InternalServerError);
+
+        return ServiceResult<string>.Success(token);
+    }
+
+    public async Task<ServiceResult> ResetPasswordWithCustomTokenAsync(string email, string token, string newPassword)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user is null)
+            return ServiceResult.Fail("Kullanıcı bulunamadı!", HttpStatusCode.NotFound);
+
+        if (user.PasswordResetToken != token)
+            return ServiceResult.Fail("Geçersiz veya hatalı token!", HttpStatusCode.BadRequest);
+
+        if (user.ResetTokenExpires is null || user.ResetTokenExpires < DateTime.UtcNow)
+            return ServiceResult.Fail("Token süresi dolmuş!", HttpStatusCode.BadRequest);
+
+        user.PasswordHash = userManager.PasswordHasher.HashPassword(user, newPassword);
+        
+        // Invalidate token
+        user.PasswordResetToken = null;
+        user.ResetTokenExpires = null;
+
+        var updateResult = await userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+            return ServiceResult.Fail("Şifre sıfırlanırken bir hata meydana geldi.", HttpStatusCode.InternalServerError);
 
         return ServiceResult.Success();
     }
