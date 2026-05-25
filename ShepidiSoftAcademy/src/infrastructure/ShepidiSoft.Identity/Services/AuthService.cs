@@ -1,15 +1,24 @@
-﻿using ShepidiSoft.Application;
+using ShepidiSoft.Application;
 using ShepidiSoft.Application.Contracts.Identity;
 using ShepidiSoft.Application.Contracts.Identity.Auths;
 using ShepidiSoft.Application.Contracts.Identity.Auths.Jwt;
+using ShepidiSoft.Application.Contracts.Persistence;
 using ShepidiSoft.Application.Features.Auths;
+using ShepidiSoft.Application.Features.Auths.ForgotPassword.Commands;
+using ShepidiSoft.Application.Features.Auths.ResetPassword.Commands;
+using ShepidiSoft.Application.Features.Outbox;
+using ShepidiSoft.Domain.Entities;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text.Json;
 
 namespace ShepidiSoft.Identity.Services;
 
-
-public sealed class AuthService(IUserService userService, IRoleService roleService, IJwtProvider jwtProvider) : IAuthService
+public sealed class AuthService(
+    IUserService userService, 
+    IRoleService roleService, 
+    IJwtProvider jwtProvider,
+    IOutboxRepository outboxRepository) : IAuthService
 {
     public async Task<ServiceResult<LoginCommandResponse>> LoginAsync(LoginCommand request)
     {
@@ -50,6 +59,48 @@ public sealed class AuthService(IUserService userService, IRoleService roleServi
             new LoginCommandResponse(accessToken, refreshToken, refreshTokenExpires));
     }
 
+    public async Task<ServiceResult> ForgotPasswordAsync(ForgotPasswordCommand request)
+    {
+        var tokenResult = await userService.GeneratePasswordResetTokenAsync(request.Email);
+        
+        if (!tokenResult.IsSuccess)
+        {            
+            return ServiceResult.Fail(tokenResult.ErrorMessage, System.Net.HttpStatusCode.NotFound);
+        }
+
+        // Email Outbox işlemleri
+        var resetLink = $"http://localhost:7149/reset-password?email={Uri.EscapeDataString(request.Email)}&token={Uri.EscapeDataString(tokenResult.Data!)}";
+
+        var payload = new EmailOutboxPayload
+        {
+            To = request.Email,
+            Subject = "Şifre Sıfırlama İsteği",
+            TemplateName = "PasswordReset",
+            Variables = new Dictionary<string, string>
+            {
+                { "ResetLink", resetLink }
+            }
+        };
+
+        var outboxMessage = new OutboxMessage
+        {
+            Type = "Email",
+            Payload = JsonSerializer.Serialize(payload)
+        };
+
+        await outboxRepository.AddAsync(outboxMessage);
+        await outboxRepository.SaveChangesAsync();
+
+        return ServiceResult.Success();
+    }
+
+    public async Task<ServiceResult> ResetPasswordAsync(ResetPasswordCommand request)
+    {
+        if (request.NewPassword != request.ConfirmPassword)
+            return ServiceResult.Fail("Şifreler eşleşmiyor", System.Net.HttpStatusCode.BadRequest);
+
+        return await userService.ResetPasswordWithCustomTokenAsync(request.Email, request.Token, request.NewPassword);
+    }
 
     private string CreateRefreshToken()
     {

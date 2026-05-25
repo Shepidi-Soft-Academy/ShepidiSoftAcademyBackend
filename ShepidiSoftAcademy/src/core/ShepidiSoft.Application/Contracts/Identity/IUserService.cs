@@ -1,4 +1,4 @@
-﻿using ShepidiSoft.Application.Features.Auths;
+using ShepidiSoft.Application.Features.Auths;
 using ShepidiSoft.Application.Features.Users.Dtos;
 
 namespace ShepidiSoft.Application.Contracts.Identity;
@@ -12,6 +12,8 @@ public  interface IUserService
     Task<ServiceResult> UpdateRefreshTokenAsync(Guid userId, string refreshToken, DateTime refreshTokenExpires);
     Task<IReadOnlyList<string>> GetRolesAsync(Guid userId);
     Task<ServiceResult>UpdatePasswordAsync(Guid userId, string oldPassword,string newPassword,string confirmNewPassword);
+    Task<ServiceResult<string>> GeneratePasswordResetTokenAsync(string email);
+    Task<ServiceResult> ResetPasswordWithCustomTokenAsync(string email, string token, string newPassword);
     Task<ServiceResult> DeleteAsync(Guid userId);
     Task<ServiceResult> UpdateAsync(Guid userId);
     Task<ServiceResult<List<UserDto>>> GetUsersByIdsAsync(List<Guid> userIds, CancellationToken cancellationToken);
