@@ -1,8 +1,7 @@
 using MediatR;
 using ShepidiSoft.Application.Contracts.Identity.Auths;
-using ShepidiSoft.Application.Features.Auths.ResetPassword.Commands;
 
-namespace ShepidiSoft.Application.Features.Auths.ResetPassword.Queries;
+namespace ShepidiSoft.Application.Features.Auths.ResetPassword.Commands;
 
 public sealed class ResetPasswordCommandHandler(IAuthService authService)
     : IRequestHandler<ResetPasswordCommand, ServiceResult>

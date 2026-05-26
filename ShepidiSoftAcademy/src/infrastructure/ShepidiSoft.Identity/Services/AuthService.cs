@@ -69,8 +69,7 @@ public sealed class AuthService(
         }
 
         // Email Outbox işlemleri
-        var resetLink = $"http://localhost:7149/reset-password?email={Uri.EscapeDataString(request.Email)}&token={Uri.EscapeDataString(tokenResult.Data!)}";
-
+        var resetLink = $"http://localhost:5173/reset-password?email={Uri.EscapeDataString(request.Email)}&token={Uri.EscapeDataString(tokenResult.Data!)}";
         var payload = new EmailOutboxPayload
         {
             To = request.Email,

@@ -1,8 +1,7 @@
 using MediatR;
 using ShepidiSoft.Application.Contracts.Identity.Auths;
-using ShepidiSoft.Application.Features.Auths.ForgotPassword.Commands;
 
-namespace ShepidiSoft.Application.Features.Auths.ForgotPassword.Queries;
+namespace ShepidiSoft.Application.Features.Auths.ForgotPassword.Commands;
 
 public sealed class ForgotPasswordCommandHandler(IAuthService authService)
     : IRequestHandler<ForgotPasswordCommand, ServiceResult>
