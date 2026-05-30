@@ -11,6 +11,7 @@ using ShepidiSoft.Persistence.Extensions;
 using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.BackgroundJobs.Extensions;
 using System.Text.Json.Serialization;
+using ShepidiSoft.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,7 +75,16 @@ builder.Services.AddControllers(options =>
 });
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
-builder.Services.AddApplicationExt().AddPersistenceExt(builder.Configuration).AddIdentityExt().AddUserExt(builder.Configuration).AddNotificationExt(builder.Configuration).AddBackgroundJobsExt();
+builder.Services
+    .AddApplicationExt()
+    .AddPersistenceExt(builder.Configuration)
+    .AddIdentityExt()
+    .AddUserExt(builder.Configuration)
+    .AddNotificationExt(builder.Configuration)
+    .AddBackgroundJobsExt()
+    .AddStorageExt(builder.Configuration);
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

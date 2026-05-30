@@ -17,7 +17,6 @@ using ShepidiSoft.Persistence.Instructors;
 using ShepidiSoft.Persistence.Interceptors;
 using ShepidiSoft.Persistence.Meetings;
 using ShepidiSoft.Persistence.Newss;
-using ShepidiSoft.Persistence.Offerings;
 using ShepidiSoft.Persistence.Options;
 using ShepidiSoft.Persistence.OrganizationMembers;
 using ShepidiSoft.Persistence.OrganizationPositions;
@@ -59,7 +58,6 @@ public static class DependencyInjection
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IActivityRepository, ActivityRepository>();
-        services.AddScoped<IOfferingRepository, OfferingRepository>();
         services.AddScoped<IInstructorRepository, InstructorRepository>();
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<IAssignmentRepository, AssignmentRepository>();

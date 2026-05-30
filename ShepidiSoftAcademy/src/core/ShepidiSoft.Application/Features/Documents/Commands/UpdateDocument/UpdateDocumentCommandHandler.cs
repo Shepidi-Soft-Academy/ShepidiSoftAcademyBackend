@@ -19,21 +19,21 @@ namespace ShepidiSoft.Application.Features.Documents.Commands.UpdateDocument
          IMapper mapper,
           ICurrentUserService currentUserService,
         IDocumentTopicRepository documentTopicRepository,
-        IUnitOfWork unitOfWork) : IRequestHandler<UpdateDocumentCommand, ServiceResult<int>>
+        IUnitOfWork unitOfWork) : IRequestHandler<UpdateDocumentCommand, ServiceResult>
     {
-        public async Task<ServiceResult<int>> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult> Handle(UpdateDocumentCommand request, CancellationToken cancellationToken)
         {
             var document = await documentRepository.GetByIdAsync(request.Id);
-            if (document == null) return ServiceResult<int>.Fail("Doküman bulunamadı.",HttpStatusCode.NotFound);
+            if (document == null) return ServiceResult.Fail("Doküman bulunamadı.",HttpStatusCode.NotFound);
 
             //  Sadece döküman sahibi günclesın 
              if (document.UploadedByUserId != currentUserService.UserId.ToString()) 
-                return ServiceResult<int>.Fail("Sadece kendi dokümanınızı güncelleyebilirsiniz.");
+                return ServiceResult.Fail("Sadece kendi dokümanınızı güncelleyebilirsiniz.");
 
            //Sadece onaylanmamış  döküman güncellenebilir
             if (document.Status != DocumentStatus.Bekliyor)
             {
-                return ServiceResult<int>.Fail("Onaylanmış veya reddedilmiş bir doküman üzerinde değişiklik yapamazsınız.");
+                return ServiceResult.Fail("Onaylanmış veya reddedilmiş bir doküman üzerinde değişiklik yapamazsınız.");
             }
 
             // AutoMapper 
@@ -41,7 +41,7 @@ namespace ShepidiSoft.Application.Features.Documents.Commands.UpdateDocument
             document.Updated = DateTime.UtcNow;
 
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            return ServiceResult<int>.Success(document.Id);
+            return ServiceResult.Success();
         }
     }
 }

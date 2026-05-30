@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
 
 public sealed record CreateDocumentCommand(
-int DocumentTopicId,
-string Title,
-string? Description,
-string FileUrl) :  IRequest<ServiceResult<int>>;
+    string Title,
+    string? Description,
+    int DocumentTopicId,
+    IFormFile File              // FileUrl → IFormFile
+) : IRequest<ServiceResult<CreateDocumentCommandResponse>>;
