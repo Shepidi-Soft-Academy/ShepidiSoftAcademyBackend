@@ -6,15 +6,15 @@ namespace ShepidiSoft.Application.Features.Documents.Commands.DeleteDocument;
 
 public sealed class DeleteDocumentCommandHandler(
  IDocumentRepository documentRepository,
- IUnitOfWork unitOfWork) : IRequestHandler<DeleteDocumentCommand, ServiceResult<bool>>
+ IUnitOfWork unitOfWork) : IRequestHandler<DeleteDocumentCommand, ServiceResult>
 {
-    public async Task<ServiceResult<bool>> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
+    public async Task<ServiceResult> Handle(DeleteDocumentCommand request, CancellationToken cancellationToken)
     {
         //  Döküman var mı kontrolü
         var document = await documentRepository.GetByIdAsync(request.Id);
 
         if (document is null)
-            return ServiceResult<bool>.Fail("Silinmek istenen doküman bulunamadı.",HttpStatusCode.NotFound);
+            return ServiceResult.Fail("Silinmek istenen doküman bulunamadı.",HttpStatusCode.NotFound);
 
       
         
@@ -22,6 +22,6 @@ public sealed class DeleteDocumentCommandHandler(
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return ServiceResult<bool>.Success(true,HttpStatusCode.NoContent);
+        return ServiceResult.Success(HttpStatusCode.NoContent);
     }
 }
