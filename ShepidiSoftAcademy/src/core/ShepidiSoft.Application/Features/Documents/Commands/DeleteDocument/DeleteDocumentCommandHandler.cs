@@ -16,8 +16,6 @@ public sealed class DeleteDocumentCommandHandler(
         if (document is null)
             return ServiceResult.Fail("Silinmek istenen doküman bulunamadı.",HttpStatusCode.NotFound);
 
-      
-        
         documentRepository.Delete(document);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
