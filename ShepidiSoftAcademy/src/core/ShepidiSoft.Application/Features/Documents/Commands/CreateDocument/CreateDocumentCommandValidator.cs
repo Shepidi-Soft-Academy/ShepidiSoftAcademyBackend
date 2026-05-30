@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
-namespace ShepidiSoft.Application.Features.Documents.Commands.CreateDocument
+namespace ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
+
+public sealed class CreateDocumentCommandValidator:AbstractValidator<CreateDocumentCommand>
 {
-    internal class CreateDocumentCommandValidator
-    {
-    }
 }
