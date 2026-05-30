@@ -29,7 +29,6 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<Applicat
     public DbSet<Document> Documents { get; set; }
     public DbSet<DocumentTopic> DocumentTopics { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
-    public DbSet<Offering> Offerings { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<ProjectImage> ProjectImages { get; set; }
     public DbSet<Organization> Organizations { get; set; }
