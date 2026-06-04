@@ -40,7 +40,6 @@ public sealed class FileStorageService(IWebHostEnvironment env) : IFileStorageSe
             File.Delete(fullPath);
     }
 
-    // ─── private ────────────────────────────────────────────────────────────
     private static void Validate(IFormFile file)
     {
         if (file is null || file.Length == 0)
