@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ShepidiSoft.Storage\ShepidiSoft.Storage.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Identity\ShepidiSoft.Identity.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Notification\ShepidiSoft.Notification.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Persistence\ShepidiSoft.Persistence.csproj" />
@@ -40,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\documents\" />
   </ItemGroup>
 
 </Project>
