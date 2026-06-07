@@ -15,32 +15,37 @@ public sealed class CreateDocumentCommandHandler(
         CreateDocumentCommand request,
         CancellationToken cancellationToken)
     {
-        string fileUrl;
+        string? fileUrl = null;
+
         try
         {
             fileUrl = await fileStorageService.SaveAsync(
                 request.File,
-                folder: "documents",
+                "documents",
                 cancellationToken);
+
+            var document = new Document
+            {
+                Title = request.Title,
+                Description = request.Description,
+                DocumentTopicId = request.DocumentTopicId,
+                FileUrl = fileUrl
+            };
+
+            await documentRepository.AddAsync(document);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return ServiceResult<CreateDocumentCommandResponse>.Success(
+                new CreateDocumentCommandResponse(document.Id));
         }
-        catch (ArgumentException ex)
+        catch (Exception ex)
         {
+            if (!string.IsNullOrEmpty(fileUrl))
+            {
+                 fileStorageService.Delete(fileUrl);
+            }
+
             return ServiceResult<CreateDocumentCommandResponse>.Fail(ex.Message);
         }
-
-        // 2. Entity oluştur
-        var document = new Document
-        {
-            Title = request.Title,
-            Description = request.Description,
-            DocumentTopicId = request.DocumentTopicId,
-            FileUrl = fileUrl,
-        };
-
-        await documentRepository.AddAsync(document);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return ServiceResult<CreateDocumentCommandResponse>.Success(
-            new CreateDocumentCommandResponse(document.Id));
     }
 }

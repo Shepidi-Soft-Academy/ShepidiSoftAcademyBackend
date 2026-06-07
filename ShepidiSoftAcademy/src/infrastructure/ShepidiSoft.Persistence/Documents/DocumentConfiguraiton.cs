@@ -27,9 +27,6 @@ public sealed class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder.Property(x => x.PublishedAt)
             .IsRequired();
 
-        builder.Property(x => x.UploadedByUserId)
-            .IsRequired()
-            .HasMaxLength(450);
 
         builder.Property(x => x.Created)
             .IsRequired();
@@ -45,12 +42,11 @@ public sealed class DocumentConfiguration : IEntityTypeConfiguration<Document>
         // Index'ler
         builder.HasIndex(x => x.DocumentTopicId);
         builder.HasIndex(x => x.PublishedAt);
-        builder.HasIndex(x => x.UploadedByUserId);
+
 
         // Composite index - Bir topic'in dökümanları tarihe göre
         builder.HasIndex(x => new { x.DocumentTopicId, x.PublishedAt });
 
-        // Composite index - Bir kullanıcının yüklediği dökümanlar tarihe göre
-        builder.HasIndex(x => new { x.UploadedByUserId, x.PublishedAt });
+     
     }
 }
