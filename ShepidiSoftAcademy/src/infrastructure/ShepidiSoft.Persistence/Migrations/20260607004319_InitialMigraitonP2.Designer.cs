@@ -12,8 +12,8 @@ using ShepidiSoft.Persistence.Context;
 namespace ShepidiSoft.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260504162750_CommunityService")]
-    partial class CommunityService
+    [Migration("20260607004319_InitialMigraitonP2")]
+    partial class InitialMigraitonP2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -847,6 +847,9 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Property<DateTime>("PublishedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(300)
@@ -1031,50 +1034,6 @@ namespace ShepidiSoft.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Newss", (string)null);
-                });
-
-            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Offering", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("character varying(3000)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("IsActive", "Created");
-
-                    b.ToTable("Offerings");
                 });
 
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.Organizations.Organization", b =>
@@ -1470,6 +1429,9 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
@@ -1483,6 +1445,9 @@ namespace ShepidiSoft.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RefreshTokenExpires")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SecurityStamp")

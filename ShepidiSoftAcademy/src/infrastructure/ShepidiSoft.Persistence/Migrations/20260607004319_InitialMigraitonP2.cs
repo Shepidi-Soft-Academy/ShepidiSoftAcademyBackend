@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ShepidiSoft.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class PsInitial : Migration
+    public partial class InitialMigraitonP2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -82,6 +82,8 @@ namespace ShepidiSoft.Persistence.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     RefreshToken = table.Column<string>(type: "text", nullable: true),
                     RefreshTokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    PasswordResetToken = table.Column<string>(type: "text", nullable: true),
+                    ResetTokenExpires = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -123,6 +125,26 @@ namespace ShepidiSoft.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CollaborationApplications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CommunityServices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
+                    ImageUrl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommunityServices", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,25 +250,6 @@ namespace ShepidiSoft.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Newss", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Offerings",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
-                    Description = table.Column<string>(type: "character varying(3000)", maxLength: 3000, nullable: false),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Offerings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -475,6 +478,7 @@ namespace ShepidiSoft.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DocumentTopicId = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     FileUrl = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     PublishedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -884,6 +888,16 @@ namespace ShepidiSoft.Persistence.Migrations
                 column: "OrganizationPositionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommunityServices_Created",
+                table: "CommunityServices",
+                column: "Created");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommunityServices_IsActive",
+                table: "CommunityServices",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ContactMessages_Email",
                 table: "ContactMessages",
                 column: "Email");
@@ -1011,16 +1025,6 @@ namespace ShepidiSoft.Persistence.Migrations
                 table: "Newss",
                 column: "Slug",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offerings_IsActive",
-                table: "Offerings",
-                column: "IsActive");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Offerings_IsActive_Created",
-                table: "Offerings",
-                columns: new[] { "IsActive", "Created" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationMemberPositions_OrganizationMemberId",
@@ -1167,6 +1171,9 @@ namespace ShepidiSoft.Persistence.Migrations
                 name: "CollaborationApplications");
 
             migrationBuilder.DropTable(
+                name: "CommunityServices");
+
+            migrationBuilder.DropTable(
                 name: "ContactMessages");
 
             migrationBuilder.DropTable(
@@ -1183,9 +1190,6 @@ namespace ShepidiSoft.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Newss");
-
-            migrationBuilder.DropTable(
-                name: "Offerings");
 
             migrationBuilder.DropTable(
                 name: "OrganizationMemberPositions");

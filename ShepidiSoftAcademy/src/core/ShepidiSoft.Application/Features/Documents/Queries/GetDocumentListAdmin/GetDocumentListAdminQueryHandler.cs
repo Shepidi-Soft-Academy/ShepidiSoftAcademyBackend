@@ -14,7 +14,7 @@ public sealed class GetDocumentListAdminQueryHandler(
     public async Task<ServiceResult<List<GetDocumentListAdminQueryResponse>>> Handle(GetDocumentListAdminQuery request, CancellationToken cancellationToken)
     {
         // Tüm dokümanları getir
-        var documents = await documentRepository.GetAllAsync();
+        var documents = await documentRepository.GetDocumentsWithTopicsAsync();
 
         if (!documents.Any())
             return ServiceResult<List<GetDocumentListAdminQueryResponse>>.Success([]);

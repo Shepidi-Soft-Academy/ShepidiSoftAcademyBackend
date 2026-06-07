@@ -12,7 +12,6 @@ public sealed class Document : BaseEntity<int>,IAuditEntity
     public string? Description { get; set; }
     public string FileUrl { get; set; } = null!;
     public DateTime PublishedAt { get; set; }
-    public string UploadedByUserId { get; set; } = null!;
 
     // Navigation Properties
     public DocumentTopic DocumentTopic { get; set; } = null!;

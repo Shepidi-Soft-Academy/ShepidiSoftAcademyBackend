@@ -858,22 +858,13 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("UploadedByUserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentTopicId");
 
                     b.HasIndex("PublishedAt");
 
-                    b.HasIndex("UploadedByUserId");
-
                     b.HasIndex("DocumentTopicId", "PublishedAt");
-
-                    b.HasIndex("UploadedByUserId", "PublishedAt");
 
                     b.ToTable("Documents");
                 });
@@ -1031,50 +1022,6 @@ namespace ShepidiSoft.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Newss", (string)null);
-                });
-
-            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Offering", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("character varying(3000)");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("character varying(300)");
-
-                    b.Property<DateTime?>("Updated")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("IsActive", "Created");
-
-                    b.ToTable("Offerings");
                 });
 
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.Organizations.Organization", b =>
