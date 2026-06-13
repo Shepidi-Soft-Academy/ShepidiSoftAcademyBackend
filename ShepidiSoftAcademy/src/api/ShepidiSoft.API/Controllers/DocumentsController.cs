@@ -5,6 +5,7 @@ using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.API.Requests;
 using ShepidiSoft.Application.Features.Documents.Commands.ChangeStatus;
 using ShepidiSoft.Application.Features.Documents.Commands.CreateDocument;
+using ShepidiSoft.Application.Features.Documents.Commands.DeleteDocument;
 using ShepidiSoft.Application.Features.Documents.Queries.GetAllDocumentsQuery;
 using ShepidiSoft.Application.Features.Documents.Queries.GetDocumentListAdmin;
 using ShepidiSoft.Application.Features.Documents.Queries.GetDocumentsByStatusQuery;
@@ -31,7 +32,13 @@ public sealed class DocumentsController(IMediator mediator) : BaseApiController(
         return Ok(result);
     }
 
-
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(new DeleteDocumentCommand(id), cancellationToken);
+        return CreateActionResult(result);
+    }
 
     // Admin Statüye göre filtreler
     [HttpGet("by-status")]
@@ -55,11 +62,11 @@ public sealed class DocumentsController(IMediator mediator) : BaseApiController(
 
 
 
-    [HttpPatch("change-status")]
+    [HttpPatch("change-status/{id}")]
      [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> ChangeStatus([FromBody] ChangeDocumentStatusCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> ChangeStatus(int id,[FromBody] UpdateDocumentStatusRequest request, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(command);
+        var command = new ChangeDocumentStatusCommand(id,request.NewStatus);
         return CreateActionResult(await mediator.Send(command,cancellationToken));
     }
 
