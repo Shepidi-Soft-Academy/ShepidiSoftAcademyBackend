@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -21,11 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ShepidiSoft.Storage\ShepidiSoft.Storage.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Identity\ShepidiSoft.Identity.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Notification\ShepidiSoft.Notification.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Persistence\ShepidiSoft.Persistence.csproj" />
     <ProjectReference Include="..\..\infrastructure\ShepidiSoft.BackgroundJobs\ShepidiSoft.BackgroundJobs.csproj" />
+    <ProjectReference Include="..\..\infrastructure\ShepidiSoft.Storage\ShepidiSoft.Storage.csproj" />
   </ItemGroup>
 
   <ItemGroup>

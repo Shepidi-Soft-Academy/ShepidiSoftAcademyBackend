@@ -1,28 +1,26 @@
 ﻿using MediatR;
 using ShepidiSoft.Application.Contracts.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShepidiSoft.Application.Features.Documents.Commands.ChangeStatus
+
+namespace ShepidiSoft.Application.Features.Documents.Commands.ChangeStatus;
+
+public class ChangeDocumentStatusCommandHandler(
+ IDocumentRepository documentRepository,
+ IUnitOfWork unitOfWork) : IRequestHandler<ChangeDocumentStatusCommand, ServiceResult>
 {
-    public class ChangeDocumentStatusCommandHandler(
-     IDocumentRepository documentRepository,
-     IUnitOfWork unitOfWork) : IRequestHandler<ChangeDocumentStatusCommand, ServiceResult<bool>>
+    public async Task<ServiceResult> Handle(ChangeDocumentStatusCommand request, CancellationToken cancellationToken)
     {
-        public async Task<ServiceResult<bool>> Handle(ChangeDocumentStatusCommand request, CancellationToken cancellationToken)
-        {
-            var document = await documentRepository.GetByIdAsync(request.Id);
-            if (document == null) return ServiceResult<bool>.Fail("Doküman bulunamadı.");
+        var document = await documentRepository.GetByIdAsync(request.Id);
 
-            //  dökümanın statüsü Admin günceller
-            document.Status = request.NewStatus;
-            document.Updated = DateTime.UtcNow;
+        if (document is null)
+            return ServiceResult.Fail("Döküman bulunamadı.");
 
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-            return ServiceResult<bool>.Success(true);
-        }
+        document.Status = request.NewStatus;
+        document.Updated = DateTime.UtcNow;
+
+         documentRepository.Update(document);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return ServiceResult.Success();
     }
 }
