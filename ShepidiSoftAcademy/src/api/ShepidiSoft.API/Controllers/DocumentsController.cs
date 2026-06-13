@@ -62,11 +62,11 @@ public sealed class DocumentsController(IMediator mediator) : BaseApiController(
 
 
 
-    [HttpPatch("change-status")]
+    [HttpPatch("change-status/{id}")]
      [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> ChangeStatus([FromBody] ChangeDocumentStatusCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> ChangeStatus(int id,[FromBody] UpdateDocumentStatusRequest request, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(command);
+        var command = new ChangeDocumentStatusCommand(id,request.NewStatus);
         return CreateActionResult(await mediator.Send(command,cancellationToken));
     }
 
