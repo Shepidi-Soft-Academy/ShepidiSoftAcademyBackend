@@ -1,0 +1,16 @@
+# .env — hassas bilgiler (asla commit etme!)
+.env
+
+# Build çıktıları
+bin/
+obj/
+
+# IDE dosyaları
+.vs/
+*.user
+
+# Log dosyaları
+*.log
+
+# NuGet
+*.nupkg

@@ -1,3 +1,4 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -13,7 +14,11 @@ using ShepidiSoft.BackgroundJobs.Extensions;
 using System.Text.Json.Serialization;
 using ShepidiSoft.Storage;
 
+// .env dosyasını yükle (varsa); ortam değişkenlerini IConfiguration'a ekle
+Env.TraversePath().Load();
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
 
 
 
