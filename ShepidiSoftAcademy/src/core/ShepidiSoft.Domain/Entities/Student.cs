@@ -1,5 +1,6 @@
 ﻿using ShepidiSoft.Domain.Entities;
 using ShepidiSoft.Domain.Entities.Common;
+using ShepidiSoft.Domain.Entities.Quizzes;
 
 public sealed class Student : BaseEntity<Guid>, IAuditEntity
 {
@@ -13,6 +14,7 @@ public sealed class Student : BaseEntity<Guid>, IAuditEntity
     public ICollection<StudentRequest> StudentRequests { get; set; } = new List<StudentRequest>();
     public ICollection<Course> Courses { get; set; } = new List<Course>();
     public ICollection<AssignmentSubmission> AssignmentSubmissions { get; set; } = new List<AssignmentSubmission>();
+    public ICollection<QuizAttempt> QuizAttempts { get; set; } = new List<QuizAttempt>();
 
     // Audit
     public DateTime Created { get; set; }
