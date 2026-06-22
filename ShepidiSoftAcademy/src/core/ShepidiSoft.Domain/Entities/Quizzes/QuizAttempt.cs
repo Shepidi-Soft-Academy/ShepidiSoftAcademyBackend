@@ -9,6 +9,8 @@ public class QuizAttempt : BaseEntity<int>, IAuditEntity
     public Guid StudentId { get; set; }
     public DateTime StartedAt { get; set; }
     public DateTime SubmittedAt { get; set; }
+    public ICollection<QuizAnswer> Answers { get; set; } = new List<QuizAnswer>();
+
     public int Duration { get; set; }
     public int TotalScore { get; set; }
     public int CorrectAnswers { get; set; }

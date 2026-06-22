@@ -11,6 +11,8 @@ public class Quiz : BaseEntity<int>, IAuditEntity
     public int CategoryId { get; set; } 
     public bool IsPublish { get; set; } = false;
     public QuizCategory? Category { get; set; } 
+    public ICollection<QuizAttempt> Attempts { get; set; } = new List<QuizAttempt>();
+
     public DateTime Created { get; set; } = default!;
     public Guid? CreatedBy { get; set; } = default!;
     public DateTime? Updated { get; set; } = default!;
