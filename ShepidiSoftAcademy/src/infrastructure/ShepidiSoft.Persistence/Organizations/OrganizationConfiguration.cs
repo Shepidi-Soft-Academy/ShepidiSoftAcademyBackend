@@ -21,6 +21,18 @@ public sealed class OrganizationConfiguration : IEntityTypeConfiguration<Organiz
         builder.Property(x => x.LogoUrl)
             .HasMaxLength(1000);
 
+        builder.Property(x => x.LinkedInUrl)
+    .HasMaxLength(1000);
+
+        builder.Property(x => x.InstagramUrl)
+            .HasMaxLength(1000);
+
+        builder.Property(x => x.WhatsappUrl)
+            .HasMaxLength(1000);
+
+        builder.Property(x => x.YoutubeUrl)
+            .HasMaxLength(1000);
+
         builder.Property(x => x.Created)
             .IsRequired();
 

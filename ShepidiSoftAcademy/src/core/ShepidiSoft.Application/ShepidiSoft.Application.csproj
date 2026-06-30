@@ -10,19 +10,16 @@
     <Compile Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
     <Compile Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
     <Compile Remove="Features\Announcements\Queries\**" />
-    <Compile Remove="Features\Organizations\**" />
     <Compile Remove="Features\ProjectImages\**" />
     <Compile Remove="Features\Projects\**" />
     <EmbeddedResource Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
     <EmbeddedResource Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
     <EmbeddedResource Remove="Features\Announcements\Queries\**" />
-    <EmbeddedResource Remove="Features\Organizations\**" />
     <EmbeddedResource Remove="Features\ProjectImages\**" />
     <EmbeddedResource Remove="Features\Projects\**" />
     <None Remove="Features\Announcements\Commands\DeleteAnnouncement\**" />
     <None Remove="Features\Announcements\Commands\UpdateAnnouncement\**" />
     <None Remove="Features\Announcements\Queries\**" />
-    <None Remove="Features\Organizations\**" />
     <None Remove="Features\ProjectImages\**" />
     <None Remove="Features\Projects\**" />
   </ItemGroup>
