@@ -45,7 +45,12 @@ public class OrganizationMemberSeeder(
             var organization = new Organization
             {
                 Name = "Shepidi Soft Academy",
-                Email = "info@shepidisoft.com"
+                Email = "info@shepidisoft.com",
+                LogoUrl = "https://shepidisoft.com/logo.png",
+                LinkedInUrl = "https://www.linkedin.com/company/shepidi-soft-academy",
+                InstagramUrl = "https://www.instagram.com/shepidisoft",
+                WhatsappUrl = "https://wa.me/905551234567",
+                YoutubeUrl = "https://www.youtube.com/@shepidisoft"
             };
 
             await organizationRepository.AddAsync(organization);
