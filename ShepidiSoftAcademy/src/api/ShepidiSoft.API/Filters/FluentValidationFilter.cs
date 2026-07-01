@@ -1,10 +1,15 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ShepidiSoft.Application;
 
 public class FluentValidationFilter : IAsyncActionFilter, IAsyncExceptionFilter
 {
+    private readonly ILogger<FluentValidationFilter> _logger;
+
+    public FluentValidationFilter(ILogger<FluentValidationFilter> logger)
+    {
+        _logger = logger;
+    }
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
@@ -15,37 +20,35 @@ public class FluentValidationFilter : IAsyncActionFilter, IAsyncExceptionFilter
                 .Select(x => x.ErrorMessage)
                 .ToList();
 
-            var resultModel = ServiceResult.Fail(errors);
-            context.Result = new BadRequestObjectResult(resultModel);
+            _logger.LogWarning("ModelState invalid | TraceId: {TraceId} | Errors: {@Errors}",
+                context.HttpContext.TraceIdentifier,
+                errors);
+
+            context.Result = new BadRequestObjectResult(ServiceResult.Fail(errors));
             return;
         }
 
         await next();
     }
 
-
     public Task OnExceptionAsync(ExceptionContext context)
     {
-        if (context.Exception is ValidationException validationException)
-        {
-            var errors = validationException.Errors
-                .Select(x => x.ErrorMessage)
-                .ToList();
+        var exception = context.Exception;
 
-            var resultModel = ServiceResult.Fail(errors);
-            context.Result = new BadRequestObjectResult(resultModel);
-            context.ExceptionHandled = true;
-        }
-        else
+        var traceId = context.HttpContext.TraceIdentifier;
+        var path = context.HttpContext.Request.Path;
+        var method = context.HttpContext.Request.Method;
+
+        _logger.LogError(exception,
+            "Unhandled exception | TraceId: {TraceId} | Path: {Path} | Method: {Method}",
+            traceId, path, method);
+
+        context.Result = new ObjectResult(ServiceResult.Fail("Bir hata meydana geldi."))
         {
-            // Tüm diğer exception'ları handle et
-            var resultModel = ServiceResult.Fail("Bir hata meydana geldi.");
-            context.Result = new ObjectResult(resultModel)
-            {
-                StatusCode = StatusCodes.Status500InternalServerError
-            };
-            context.ExceptionHandled = true;
-        }
+            StatusCode = 500
+        };
+
+        context.ExceptionHandled = true;
 
         return Task.CompletedTask;
     }

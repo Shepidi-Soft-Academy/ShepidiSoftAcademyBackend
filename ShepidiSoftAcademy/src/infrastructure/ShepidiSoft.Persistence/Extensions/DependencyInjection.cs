@@ -22,6 +22,7 @@ using ShepidiSoft.Persistence.OrganizationMembers;
 using ShepidiSoft.Persistence.OrganizationPositions;
 using ShepidiSoft.Persistence.Organizations;
 using ShepidiSoft.Persistence.Outbox;
+using ShepidiSoft.Persistence.Partners;
 using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.Persistence.Seedings.Seeders;
 using ShepidiSoft.Persistence.StudentRequests;
@@ -79,6 +80,7 @@ public static class DependencyInjection
         services.AddScoped<ICommunityServiceRepository, CommunityServiceRepository>();
         services.AddScoped<IDocumentRepository, DocumentRepository>();
         services.AddScoped<IDocumentTopicRepository, DocumentTopicRepository>();
+        services.AddScoped<IPartnerRepository, PartnerRepository>();
 
     }
 
