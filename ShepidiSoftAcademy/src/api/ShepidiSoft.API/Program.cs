@@ -71,7 +71,7 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
-
+builder.Services.AddScoped<FluentValidationFilter>();
 // Add services to the container.
 builder.Services.AddControllers(options =>
 {

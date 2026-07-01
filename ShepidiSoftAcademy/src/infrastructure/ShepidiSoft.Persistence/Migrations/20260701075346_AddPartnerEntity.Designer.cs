@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ShepidiSoft.Persistence.Context;
@@ -11,9 +12,11 @@ using ShepidiSoft.Persistence.Context;
 namespace ShepidiSoft.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260701075346_AddPartnerEntity")]
+    partial class AddPartnerEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1197,12 +1200,6 @@ namespace ShepidiSoft.Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("InstagramUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LinkedInUrl")
-                        .HasColumnType("text");
-
                     b.Property<string>("LogoUrl")
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
@@ -1217,12 +1214,6 @@ namespace ShepidiSoft.Persistence.Migrations
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("WhatsappUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("YoutubeUrl")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
