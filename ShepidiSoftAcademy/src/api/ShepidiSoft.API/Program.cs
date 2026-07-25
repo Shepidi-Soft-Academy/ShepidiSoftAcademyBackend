@@ -13,6 +13,7 @@ using ShepidiSoft.Persistence.Seedings;
 using ShepidiSoft.BackgroundJobs.Extensions;
 using System.Text.Json.Serialization;
 using ShepidiSoft.Storage;
+using Microsoft.EntityFrameworkCore;
 
 // .env dosyasını yükle (varsa); ortam değişkenlerini IConfiguration'a ekle
 Env.TraversePath().Load();
@@ -100,9 +101,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    // Seed database
+    // Migrate & seed database
     using (var scope = app.Services.CreateScope())
     {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ShepidiSoft.Persistence.Context.AppDbContext>();
+        await dbContext.Database.MigrateAsync();
+
         var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
         await seeder.SeedAsync();
     }
