@@ -12,8 +12,8 @@ using ShepidiSoft.Persistence.Context;
 namespace ShepidiSoft.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260607004319_InitialMigraitonP2")]
-    partial class InitialMigraitonP2
+    [Migration("20260725084316_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,6 +213,160 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CorrectOption")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("OptionA")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("OptionB")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("OptionC")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("OptionD")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("Quiz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<bool>("IsPublish")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("ScoreLimit")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TimeLimit")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Quiz");
+                });
+
+            modelBuilder.Entity("QuizAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuizAttemptId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SelectedOption")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("QuizAttemptId");
+
+                    b.ToTable("QuizAnswer");
                 });
 
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.Activity", b =>
@@ -861,22 +1015,13 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("UploadedByUserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("character varying(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentTopicId");
 
                     b.HasIndex("PublishedAt");
 
-                    b.HasIndex("UploadedByUserId");
-
                     b.HasIndex("DocumentTopicId", "PublishedAt");
-
-                    b.HasIndex("UploadedByUserId", "PublishedAt");
 
                     b.ToTable("Documents");
                 });
@@ -1334,6 +1479,103 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.ToTable("ProjectImages");
                 });
 
+            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Quizzes.QuizAttempt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CorrectAnswers")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IncorrectAnswers")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TotalScore")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("QuizAttempt");
+                });
+
+            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Quizzes.QuizCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuizCategory");
+                });
+
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.StudentRequest", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1584,6 +1826,47 @@ namespace ShepidiSoft.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Question", b =>
+                {
+                    b.HasOne("Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("Quiz", b =>
+                {
+                    b.HasOne("ShepidiSoft.Domain.Entities.Quizzes.QuizCategory", "Category")
+                        .WithMany("Quizzes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("QuizAnswer", b =>
+                {
+                    b.HasOne("Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ShepidiSoft.Domain.Entities.Quizzes.QuizAttempt", "QuizAttempt")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuizAttemptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("QuizAttempt");
+                });
+
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.Assignment", b =>
                 {
                     b.HasOne("ShepidiSoft.Domain.Entities.Course", "Course")
@@ -1688,6 +1971,25 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Quizzes.QuizAttempt", b =>
+                {
+                    b.HasOne("Quiz", "Quiz")
+                        .WithMany("Attempts")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Student", "Student")
+                        .WithMany("QuizAttempts")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.StudentRequest", b =>
                 {
                     b.HasOne("Student", "Student")
@@ -1697,6 +1999,13 @@ namespace ShepidiSoft.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Quiz", b =>
+                {
+                    b.Navigation("Attempts");
+
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("ShepidiSoft.Domain.Entities.Assignment", b =>
@@ -1736,9 +2045,21 @@ namespace ShepidiSoft.Persistence.Migrations
                     b.Navigation("Images");
                 });
 
+            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Quizzes.QuizAttempt", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("ShepidiSoft.Domain.Entities.Quizzes.QuizCategory", b =>
+                {
+                    b.Navigation("Quizzes");
+                });
+
             modelBuilder.Entity("Student", b =>
                 {
                     b.Navigation("AssignmentSubmissions");
+
+                    b.Navigation("QuizAttempts");
 
                     b.Navigation("StudentRequests");
                 });
