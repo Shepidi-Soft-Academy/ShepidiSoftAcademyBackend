@@ -1,4 +1,5 @@
-﻿using MediatR;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.API.Requests;
@@ -13,12 +14,14 @@ namespace ShepidiSoft.API.Controllers;
 public sealed class AssignmentsController(IMediator mediator) : BaseApiController(mediator)
 {
     [HttpPost]
+    [Authorize(Roles = "Admin,Instructor")]
     public async Task<IActionResult> Create(
 CreateAssignmentCommand request,
 CancellationToken cancellationToken)
 => CreateActionResult(await _mediator.Send(request, cancellationToken));
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin,Instructor")]
 
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
@@ -30,6 +33,7 @@ CancellationToken cancellationToken)
 
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin,Instructor")]
 
     public async Task<IActionResult> Update(int id, UpdateAssignmentRequest request, CancellationToken cancellationToken)
     {

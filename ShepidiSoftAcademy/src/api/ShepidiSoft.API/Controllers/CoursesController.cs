@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
@@ -19,12 +19,14 @@ namespace ShepidiSoft.API.Controllers;
 public sealed class CoursesController(IMediator mediator) : BaseApiController(mediator)
 {
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(
 CreateCourseCommand request,
 CancellationToken cancellationToken)
 => CreateActionResult(await _mediator.Send(request, cancellationToken));
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
 
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
@@ -35,6 +37,7 @@ CancellationToken cancellationToken)
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
 
     public async Task<IActionResult> Update(int id, UpdateCourseRequest request, CancellationToken cancellationToken)
     {
@@ -82,14 +85,17 @@ CancellationToken cancellationToken)
     await _mediator.Send(new GetCourseDetailQuery(id), cancellationToken));
 
     [HttpGet("{courseId}/students")]
+    [Authorize(Roles = "Admin")]
 public async Task<IActionResult> GetStudentsByCourse(int courseId, CancellationToken cancellationToken)
     => CreateActionResult(await _mediator.Send(new GetStudentsByCourseQuery(courseId), cancellationToken));
 
     [HttpPost("{courseId}/students")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AssignStudent(int courseId, Guid studentId, CancellationToken cancellationToken)
     => CreateActionResult(await _mediator.Send(new AssignStudentToCourseCommand(studentId, courseId), cancellationToken));
 
     [HttpDelete("{courseId}/students/{userId}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> RemoveStudent(int courseId, Guid userId, CancellationToken cancellationToken)
     => CreateActionResult(await _mediator.Send(new RemoveStudentFromCourseCommand(courseId,userId), cancellationToken));
     [HttpGet("admin")]

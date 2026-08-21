@@ -29,12 +29,12 @@ builder.Services.ConfigureOptions<JwtOptionsSetup>();
 builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 builder.Services.AddAuthentication().AddJwtBearer();
-builder.Services.AddControllers()
-    .AddJsonOptions(opt =>
-        opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
 
 builder.Services.AddSwaggerGen(setup =>
 {
+
+
     var jwtSecuritySheme = new OpenApiSecurityScheme
     {
         BearerFormat = "JWT",
@@ -78,7 +78,9 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<FluentValidationFilter>();
     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-});
+})
+.AddJsonOptions(opt =>
+    opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
 builder.Services
@@ -92,27 +94,31 @@ builder.Services
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Swagger — sadece Development ortamında
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // Migrate & seed database
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ShepidiSoft.Persistence.Context.AppDbContext>();
-        await dbContext.Database.MigrateAsync();
-
-        var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
-        await seeder.SeedAsync();
-    }
 }
 
-app.UseHttpsRedirection();
+// Migrate & seed database — tüm ortamlarda çalışsın
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ShepidiSoft.Persistence.Context.AppDbContext>();
+    await dbContext.Database.MigrateAsync();
+
+    var seeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
+    await seeder.SeedAsync();
+}
+
+// HTTPS yönlendirmesi — Production'da reverse proxy TLS'i yönetir
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 
 
@@ -126,4 +132,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();app.Run();
+// Health check endpoint — Docker ve load balancer için
+app.MapGet("/health", () => Results.Ok("Healthy"));
+
+app.Run();

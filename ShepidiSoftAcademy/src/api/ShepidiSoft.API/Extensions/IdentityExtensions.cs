@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using ShepidiSoft.Identity.Models;
 using ShepidiSoft.Persistence.Context;
 
@@ -18,7 +18,8 @@ public static class IdentityExtensions
             options.Password.RequireUppercase = false;
             options.User.RequireUniqueEmail = true;
         })
-        .AddEntityFrameworkStores<AppDbContext>();
+        .AddEntityFrameworkStores<AppDbContext>()
+        .AddDefaultTokenProviders();
 
 
 

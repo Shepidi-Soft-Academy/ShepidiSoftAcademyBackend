@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShepidiSoft.Domain.Entities;
 
@@ -26,15 +26,15 @@ namespace ShepidiSoft.Persistence.CourseMemberships
                    .IsRequired()
                    .HasMaxLength(50);
 
-            // JoinedAt - FIXED FOR POSTGRESQL
+            // JoinedAt
             builder.Property(cm => cm.JoinedAt)
                    .IsRequired()
-                   .HasDefaultValueSql("now()");
+                   .HasDefaultValueSql("GETUTCDATE()");
 
-            // Audit fields - FIXED FOR POSTGRESQL
+            // Audit fields
             builder.Property(cm => cm.Created)
                    .IsRequired()
-                   .HasDefaultValueSql("now()");
+                   .HasDefaultValueSql("GETUTCDATE()");
 
             builder.Property(cm => cm.Updated)
                    .IsRequired(false);

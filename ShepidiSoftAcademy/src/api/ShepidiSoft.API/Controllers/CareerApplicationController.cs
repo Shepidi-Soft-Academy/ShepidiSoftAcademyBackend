@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
@@ -27,6 +27,7 @@ CancellationToken cancellationToken)
 
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
         var command = new DeleteCareerApplicationCommand(id);

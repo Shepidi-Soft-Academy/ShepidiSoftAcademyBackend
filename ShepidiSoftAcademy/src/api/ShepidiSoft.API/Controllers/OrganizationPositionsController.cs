@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
@@ -11,12 +11,14 @@ namespace ShepidiSoft.API.Controllers;
 public class OrganizationPositionsController(IMediator mediator) : BaseApiController(mediator)
 {
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(
    [FromBody] CreateOrganizationPositionCommand request,
    CancellationToken cancellationToken)
    => CreateActionResult(await mediator.Send(request, cancellationToken));
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
 
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

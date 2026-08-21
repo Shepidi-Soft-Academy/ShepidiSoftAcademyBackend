@@ -1,47 +1,39 @@
-﻿using MediatR;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.Application.Features.DocumentTopics.Command.CreateDocumentTopic;
 using ShepidiSoft.Application.Features.DocumentTopics.Command.DeleteDocumentTopic;
 using ShepidiSoft.Application.Features.DocumentTopics.Commands.UpdateDocumentTopic;
 using ShepidiSoft.Application.Features.DocumentTopics.Queries.GetAllDocumentTopicQuery;
 using ShepidiSoft.Application.Features.DocumentTopics.Queries.GetByIdDocumentTopicQuery;
 
-[ApiController]
-[Route("api/[controller]")]
-public class DocumentTopicsController(IMediator mediator) : ControllerBase
+namespace ShepidiSoft.API.Controllers;
+
+public class DocumentTopicsController(IMediator mediator) : BaseApiController(mediator)
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        var result = await mediator.Send(new GetAllDocumentTopicsQuery());
-        return Ok(result);
-    }
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(new GetAllDocumentTopicsQuery(), cancellationToken));
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        var result = await mediator.Send(new GetDocumentTopicByIdQuery(id));
-        return Ok(result);
-    }
+    [AllowAnonymous]
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(new GetDocumentTopicByIdQuery(id), cancellationToken));
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateDocumentTopicCommand command)
-    {
-        var result = await mediator.Send(command);
-        return Ok(result);
-    }
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Create([FromBody] CreateDocumentTopicCommand command, CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(command, cancellationToken));
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] UpdateDocumentTopicCommand command)
-    {
-        var result = await mediator.Send(command);
-        return Ok(result);
-    }
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update([FromBody] UpdateDocumentTopicCommand command, CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(command, cancellationToken));
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var result = await mediator.Send(new DeleteDocumentTopicCommand(id));
-        return Ok(result);
-    }
-}
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        => CreateActionResult(await _mediator.Send(new DeleteDocumentTopicCommand(id), cancellationToken));
+}

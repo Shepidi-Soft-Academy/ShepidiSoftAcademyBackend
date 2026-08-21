@@ -6,7 +6,7 @@ public class RoleSeeder(IRoleService roleService)
 {
     public async Task SeedAsync()
     {
-        var roles = new[] { "Admin", "Instructor", "Student", "Manager" };
+        var roles = new[] { "Admin", "Instructor", "Student", "Manager", "OrganizationMember" };
 
         foreach (var role in roles)
         {

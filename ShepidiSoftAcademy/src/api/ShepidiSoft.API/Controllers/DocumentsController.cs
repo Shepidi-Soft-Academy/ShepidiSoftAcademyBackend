@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
@@ -18,6 +18,7 @@ public sealed class DocumentsController(IMediator mediator) : BaseApiController(
 {
     
      [HttpGet]
+     [AllowAnonymous]
 
     public async Task<IActionResult> GetAll()
     {
@@ -26,6 +27,7 @@ public sealed class DocumentsController(IMediator mediator) : BaseApiController(
     }
 
     [HttpGet("admin-documents")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetDocumentsAdmin()
     {
         var result = await mediator.Send(new GetDocumentListAdminQuery());

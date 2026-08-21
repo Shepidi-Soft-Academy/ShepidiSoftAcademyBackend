@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
@@ -21,6 +21,7 @@ CancellationToken cancellationToken)
 
 
     [HttpPatch("{id}/read")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> MarkAsRead(
     int id,
     CancellationToken cancellationToken)
@@ -31,11 +32,13 @@ CancellationToken cancellationToken)
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
      => CreateActionResult(
       await _mediator.Send(new GetContactMessagesListQuery(), cancellationToken));
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
 
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

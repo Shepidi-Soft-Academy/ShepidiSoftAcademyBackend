@@ -1,4 +1,5 @@
-﻿using MediatR;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShepidiSoft.API.Abstraction;
 using ShepidiSoft.Application.Features.Students.Commands.CreateStudent;
@@ -10,16 +11,19 @@ namespace ShepidiSoft.API.Controllers;
 public sealed class StudentsController(IMediator mediator) : BaseApiController(mediator)
 {
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         => CreateActionResult(await _mediator.Send(new GetStudentListQuery(), cancellationToken));
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(
         CreateStudentCommand request,
         CancellationToken cancellationToken)
         => CreateActionResult(await _mediator.Send(request, cancellationToken));
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteStudentCommand(id);

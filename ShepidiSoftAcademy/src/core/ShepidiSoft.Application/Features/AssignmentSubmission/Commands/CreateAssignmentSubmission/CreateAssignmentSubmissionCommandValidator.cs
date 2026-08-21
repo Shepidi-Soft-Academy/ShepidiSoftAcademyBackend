@@ -1,5 +1,5 @@
 ﻿namespace ShepidiSoft.Application.Features.AssignmentSubmission.Commands.CreateAssignmentSubmission;
 
-internal class CreateAssignmentSubmissionCommandValidator
+public sealed class CreateAssignmentSubmissionCommandValidator
 {
 }
